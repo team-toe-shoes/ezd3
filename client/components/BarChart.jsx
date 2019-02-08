@@ -4,43 +4,64 @@ import * as d3 from "d3";
 
 class BarChart extends Component {
   plotGraph() {
-    const dataset = this.props.data;
+    //   chartTitle: { value: "Name", type: "text" },
+    //   xTitle: { value: "xTitle", type: "text" },
+    //   yTitle: { value: "xTitle", type: "text" },
+    const dataset = [10, 16, 2, 15, 14, 7];
     const svgWidth = this.props.options.chartWidth.value;
     const svgHeight = this.props.options.chartHeight.value;
     const barPadding = this.props.options.barMargin.value;
     const barWidth = svgWidth / dataset.length;
+    const barColor = this.props.options.barColor.value;
+    const bgColor = this.props.options.chartBGColor.value;
+    const margin = 20;
 
-    let svg = d3
-      .select("svg#plot_cont")
-      .attr("width", svgWidth)
-      .attr("height", svgHeight)
-      .style("background-color", this.props.options.chartBGColor.value);
-    //   chartTitle: { value: "Name", type: "text" },
+    const y = d3.scaleLinear()
+      .domain([0, Math.max(...dataset)])
+      .range([svgHeight, 0]);
 
-    //   xTitle: { value: "xTitle", type: "text" },
-    //   yTitle: { value: "xTitle", type: "text" },
+    const x = d3.scaleBand()
+      .domain(['A', 'B', 'C', 'D', 'E', 'F'])
+      .rangeRound([0, svgWidth])
+      .padding(0);
 
-    let barChart = svg
-      .selectAll("rect")
+    const chart = d3.select('svg#plot_cont');
+
+    chart
+      .style("background-color", bgColor)
+      .attr('width', svgWidth + 2 * margin)
+      .attr('height', svgHeight + 2 * margin)
+      .append('g')
+        .attr('transform', 'translate(' + margin + ',' + margin + ')')
+      .selectAll('rect')
       .data(dataset)
-      .enter()
-      .append("rect")
-      .attr("y", function(d) {
-        return svgHeight - d;
-      })
-      .attr("height", function(d) {
-        return d;
-      })
-      .attr("fill", this.props.options.barColor.value)
+      .enter().append('rect')
+      .attr('fill', barColor)
       .attr("width", barWidth - barPadding)
-      .attr("transform", function(d, i) {
-        let translate = [barWidth * i, 0];
-        return "translate(" + translate + ")";
-      });
+      .attr("height", function(d) { return svgHeight - y(d); })
+      .attr("x", function(d, i) { return barWidth * i + parseInt(barPadding) / 2; })
+      .attr("y", function(d) { return y(d); });
+    
+    const xAxis = d3.axisBottom(x);
+
+    const yAxis = d3.axisLeft(y)
+      .ticks(5);
+
+    chart.append("g")
+      .attr("transform", "translate(" + margin + "," + (svgHeight + margin) + ")")
+      .call(xAxis);
+    
+    chart.append("g")
+      .attr("transform", "translate(" + margin + "," + margin + ")")
+      .call(yAxis);
   }
 
   componentDidMount() {
-    console.log("TEST");
+    this.plotGraph();
+  }
+
+  componentDidUpdate() {
+    document.querySelector('svg#plot_cont').innerHTML = '';
     this.plotGraph();
   }
 

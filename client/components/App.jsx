@@ -65,12 +65,3 @@ class App extends Component {
 }
 
 export default App;
-"barColor",
-  "barMargin",
-  "barThickness",
-  "chartHeight",
-  "chartWidth",
-  "chartBGColor",
-  "xTitle",
-  "yTitle",
-  "chartTitle";
