@@ -12,7 +12,6 @@ class App extends Component {
         barChart: [
           "barColor",
           "barMargin",
-          "barThickness",
           "chartHeight",
           "chartWidth",
           "chartBGColor",
@@ -24,12 +23,11 @@ class App extends Component {
       chartTitle: { value: "Name", type: "text" },
       chartHeight: { value: 500, type: "number" },
       chartWidth: { value: 700, type: "number" },
-      chartBGColor: { value: "white", type: "color" },
+      chartBGColor: { value: "#4286f4", type: "color" },
       xTitle: { value: "xTitle", type: "text" },
       yTitle: { value: "xTitle", type: "text" },
-      barColor: { value: "black", type: "color" },
+      barColor: { value: "#4211f4", type: "color" },
       barMargin: { value: 2, type: "number" },
-      barThickness: { value: 20, type: "number" },
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -37,9 +35,11 @@ class App extends Component {
   handleChange(e) {
     console.log('in handle change:', e);
     const { name, value } = e.target;
+    const newObj = Object.assign({}, this.state[name]);
+    newObj.value = value;
     this.setState({
-      [name]: value,
-    })
+      [name]: newObj,
+    });
   }
 
     render() {
@@ -55,7 +55,7 @@ class App extends Component {
             options={optionsToPass}
             handleChange={this.handleChange}
           />
-          <ChartDisplay />
+          <ChartDisplay options={optionsToPass} />
         </div>
       );
     }
