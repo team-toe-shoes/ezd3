@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {  MainWrapper, Title } from './../Styles/styledComponents';
 import OptionsDisplay from "./OptionsDisplay.jsx";
 import ChartDisplay from "./ChartDisplay.jsx";
 
@@ -33,7 +34,10 @@ class App extends Component {
   }
 
   handleChange(e) {
-    const { name, value } = e.target;
+    let { name, type, value } = e.target;
+    if (type === 'number') {
+      value = Number(value);
+    }
     const newObj = Object.assign({}, this.state[name]);
     newObj.value = value;
     this.setState({
@@ -48,14 +52,14 @@ class App extends Component {
       return acc;
     }, {});
     return (
-      <div>
-        <div> Hello World! </div>
+      <MainWrapper>
+        <Title> D3 Simplifier </Title>
         <OptionsDisplay
           options={optionsToPass}
           handleChange={this.handleChange}
         />
         <ChartDisplay options={optionsToPass} data={this.state.data} />
-      </div>
+      </MainWrapper>
     );
   }
 }
