@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import OptionsDisplay from './OptionsDisplay.jsx';
+import ChartDisplay from "./ChartDisplay.jsx";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
+      data: [20, 50, 100, 70],
       type: "barChart",
       graphs: {
         barChart: [
@@ -46,12 +48,16 @@ class App extends Component {
         acc[option] = this.state[option];
         return acc;
       }, {})
-      return(
+      return (
         <div>
           <div> Hello World! </div>
-          <OptionsDisplay options={optionsToPass} />
+          <OptionsDisplay
+            options={optionsToPass}
+            handleChange={this.handleChange}
+          />
+          <ChartDisplay />
         </div>
-      )
+      );
     }
   
 }
