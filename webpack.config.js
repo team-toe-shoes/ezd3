@@ -23,5 +23,6 @@ module.exports = {
   devServer: {
     hot: true,
     publicPath: 'http://localhost:8080/build/',
+    contentBase: './'
   }
 }
