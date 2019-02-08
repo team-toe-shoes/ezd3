@@ -1,0 +1,25 @@
+{
+  "name": "d3-dummify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goblin-sharks/D3-Dummify.git"
+  },
+  "author": "Goblin-sharks",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/goblin-sharks/D3-Dummify/issues"
+  },
+  "homepage": "https://github.com/goblin-sharks/D3-Dummify#readme",
+  "dependencies": {
+    "d3": "^5.9.0",
+    "express": "^4.16.4",
+    "react": "^16.8.1",
+    "webpack": "^4.29.3"
+  }
+}
