@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import OptionsDisplay from './OptionsDisplay.jsx';
-// import ChartDisplay from "./ChartDisplay.jsx";
+import ChartDisplay from "./ChartDisplay.jsx";
 
 class App extends Component {
   constructor() {
@@ -12,7 +12,6 @@ class App extends Component {
         barChart: [
           "barColor",
           "barMargin",
-          "barThickness",
           "chartHeight",
           "chartWidth",
           "chartBGColor",
@@ -29,7 +28,6 @@ class App extends Component {
       yTitle: { value: "xTitle", type: "text" },
       barColor: { value: "#4211f4", type: "color" },
       barMargin: { value: 2, type: "number" },
-      barThickness: { value: 20, type: "number" }
     };
     this.handleChange = this.handleChange.bind(this);
   }
