@@ -33,7 +33,6 @@ class App extends Component {
   }
 
   handleChange(e) {
-    console.log("in handle change:", e);
     const { name, value } = e.target;
     const newObj = Object.assign({}, this.state[name]);
     newObj.value = value;
@@ -62,12 +61,3 @@ class App extends Component {
 }
 
 export default App;
-"barColor",
-  "barMargin",
-  "barThickness",
-  "chartHeight",
-  "chartWidth",
-  "chartBGColor",
-  "xTitle",
-  "yTitle",
-  "chartTitle";
