@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import OptionsDisplay from './OptionsDisplay.jsx';
+import React, { Component } from "react";
+import OptionsDisplay from "./OptionsDisplay.jsx";
 import ChartDisplay from "./ChartDisplay.jsx";
 
 class App extends Component {
@@ -27,39 +27,47 @@ class App extends Component {
       xTitle: { value: "xTitle", type: "text" },
       yTitle: { value: "xTitle", type: "text" },
       barColor: { value: "#4211f4", type: "color" },
-      barMargin: { value: 2, type: "number" },
+      barMargin: { value: 2, type: "number" }
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
+    console.log("in handle change:", e);
     const { name, value } = e.target;
     const newObj = Object.assign({}, this.state[name]);
     newObj.value = value;
     this.setState({
-      [name]: newObj,
+      [name]: newObj
     });
   }
 
-    render() {
-      const { graphs, type } = this.state;
-      const optionsToPass = graphs[type].reduce( (acc, option) => {
-        acc[option] = this.state[option];
-        return acc;
-      }, {})
-      return (
-        <div>
-          <div> Hello World! </div>
-          <OptionsDisplay
-            options={optionsToPass}
-            handleChange={this.handleChange}
-          />
-          <ChartDisplay options={optionsToPass} />
-        </div>
-      );
-    }
-  
+  render() {
+    const { graphs, type } = this.state;
+    const optionsToPass = graphs[type].reduce((acc, option) => {
+      acc[option] = this.state[option];
+      return acc;
+    }, {});
+    return (
+      <div>
+        <div> Hello World! </div>
+        <OptionsDisplay
+          options={optionsToPass}
+          handleChange={this.handleChange}
+        />
+        <ChartDisplay options={optionsToPass} data={this.state.data} />
+      </div>
+    );
+  }
 }
 
 export default App;
- 'barColor', 'barMargin', 'barThickness', 'chartHeight', 'chartWidth', 'chartBGColor', 'xTitle', 'yTitle', 'chartTitle'
+"barColor",
+  "barMargin",
+  "barThickness",
+  "chartHeight",
+  "chartWidth",
+  "chartBGColor",
+  "xTitle",
+  "yTitle",
+  "chartTitle";

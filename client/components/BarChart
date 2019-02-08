@@ -1,0 +1,67 @@
+import React from "react";
+import { Component } from "react";
+this.state = {
+    type: "barChart",
+    graphs: {
+      barChart: [
+        "barColor",
+        "barMargin",
+        "barThickness",
+        "chartHeight",
+        "chartWidth",
+        "chartBGColor",
+        "xTitle",
+        "yTitle",
+        "chartTitle"
+      ]
+    },
+    barThickness: { value: 20, type: "number" },
+    chartBGColor: { value: "white", type: "color" },
+    chartHeight: { value: 500, type: "number" },
+    chartWidth: { value: 700, type: "number" },
+    chartTitle: { value: "Name", type: "text" },
+    barMargin: { value: 2, type: "number" },
+    barColor: { value: "black", type: "color" },
+    xTitle: { value: "xTitle", type: "text" },
+    yTitle: { value: "yTitle", type: "text" },
+  };
+
+class BarChart extends Component {
+
+    plotGraph() {     
+        let dataset = //DATASET; 
+        let svgWidth = this.props.chartWidth
+        let svgHeight = this.props.chartHeight; 
+        let barPadding = this.props.barThickness;
+        let barWidth = (svgWidth / dataset.length);
+
+        let svg = d3.select('svg')
+            .attr("width", svgWidth)
+            .attr("height", svgHeight)
+            .style("background-color", this.props.chartBGColor);
+
+        let barChart = svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("y", function(d) {
+                return svgHeight - d;
+            })
+            .attr("height", function(d) {
+                return d;
+            })
+            .attr("width", barWidth - barPadding)
+            .attr("transform", function (d, i) {
+                let translate = [barWidth * i, 0];
+                return "translate("+ translate +")";
+        });
+    }
+    
+    render() {
+        return <svg></svg>;
+    }
+};
+
+componentDidUpdate = () => { renderGraph() }
+ 
+export default BarChart;
