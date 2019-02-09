@@ -9,12 +9,15 @@ const OptionDisplay = props => {
     .replace("chartHeight", "Chart Height")
     .replace("chartWidth", "Chart Width")
     .replace("chartBGColor", "Background")
-    .replace("chartTitle", "Chart Title");
+    .replace("chartTitle", "Chart Title")
+    .replace("xTitle", "x-Title")
+    .replace("yTitle", "y-Title");
 
   return (
     <LabelWrapper>
       <label htmlFor={props.value}>{optionName}</label>
       <Input
+        id={props.value}
         type={props.type}
         name={props.name}
         value={props.value}
