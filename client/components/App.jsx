@@ -25,7 +25,7 @@ class App extends Component {
       codeText: '',
       // reflect the type of graph chosen by user
       // defaulted to Bar Chart
-      type: 'PieChart',
+      type: 'BarChart',
 
       // options that can be modified by user for each type
       // of graphs available in the app
@@ -53,7 +53,7 @@ class App extends Component {
       yTitle: { value: 'yTitle', type: 'text' },
       barColor: { value: '#003078', type: 'color' },
       barMargin: { value: 2, type: 'number' },
-      transition: { value: 'mouseover', type: 'string' },
+      transition: { name: 'false', type: 'checkbox' },
     };
 
     // binding functions that are passed to children components
