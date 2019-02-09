@@ -1,13 +1,8 @@
-import React, { Component } from 'react';
+import Chart from '../classes/Chart';
 import * as d3 from 'd3';
 import Chart from '../classes/Chart.js';
 
 class BarChart extends Chart {
-  constructor() {
-    super();
-    this.debouncerTracker = 0;
-  }
-
   plotGraph() {
     const xData = [];
     const yData = [];
@@ -84,7 +79,10 @@ class BarChart extends Chart {
     // adding text label & stlying for Chart Name
     chart
       .append('text')
-      .attr('transform', `translate(${svgWidth / 2 + margin},${Math.max(...yData) - margin})`)
+      .attr(
+        'transform',
+        'translate(' + (svgWidth / 2 + margin) + ',' + (Math.max(...yData) - margin) + ')',
+      )
       .style('font-size', '1.5em')
       .style('font-weight', 'bold')
       .style('text-anchor', 'middle')
@@ -115,13 +113,13 @@ class BarChart extends Chart {
 
     if (transition === '') {
       d3.selectAll('rect')
-        .on('mouseover', function (d, i) {
+        .on('mouseover', function(d, i) {
           d3.select(this)
             .transition()
             .duration(200)
             .style('opacity', 0.7);
         })
-        .on('mouseout', function (d, i) {
+        .on('mouseout', function(d, i) {
           d3.select(this)
             .transition()
             .duration(200)
@@ -133,29 +131,34 @@ class BarChart extends Chart {
   updateCode(nextProps) {
     this.props.updateCodeText(`
       // Define basic graph properties 
-      const dataset = [10, 16, 20, 15, 14, 7];
+      const xData = [20, 70, 5, 30];
+      const yData = ['Q1', 'Q2', 'Q3', 'Q4'];
       const svgWidth = ${nextProps.chartWidth.value};
       const svgHeight = ${nextProps.chartHeight.value};
       const barPadding = ${nextProps.barMargin.value};
-      const barWidth = ${nextProps.chartWidth.value};
       const barColor = ${nextProps.barColor.value};
       const bgColor = ${nextProps.chartBGColor.value};
-      const margin = 20;
+      const chartName = ${nextProps.chartTitle.value};
+      const yTitle = ${nextProps.yTitle.value};
+      const xTitle = ${nextProps.xTitle.value};
+      const barWidth = ${nextProps.chartWidth.value / 4};
+      const margin = 40;  
 
-      // Set scale on y-axis. The domain represents the values
-      // on the scale. The range, the height of the y-axis on the 
-      // svg element.
-      const y = d3.scaleLinear()
-        .domain([0, Math.max(...dataset)])
+      // Creates a linear scale for the y-axis. The domain represents the values
+      // on the scale. The range, the height of the y-axis on the svg element.
+      const y = d3
+        .scaleLinear()
+        .domain([0, Math.max(...yData)])
         .range([svgHeight, 0]);
-
+  
       // For the x-axis, we have a discrete distribution, so we 
       // need to use the .scaleBand() method.
-      const x = d3.scaleBand()
-        .domain(['A', 'B', 'C', 'D', 'E', 'F'])
+      const x = d3
+        .scaleBand()
+        .domain(xData)
         .rangeRound([0, svgWidth])
         .padding(0);
-
+  
       // 'svg#plot_cont' is the CSS-selector for the element we 
       // want to plot the graph in.
       const chart = d3.select('svg#plot_cont');
@@ -195,44 +198,42 @@ class BarChart extends Chart {
       chart.append("g")
         .attr("transform", "translate(" + margin + "," + margin + ")")
         .call(yAxis);
+
+      // adding text label & stlying for Chart Name
+      chart
+        .append('text')
+        .attr(
+          'transform',
+          'translate(' + (svgWidth / 2 + margin) + ',' + (Math.max(...yData) - margin) + ')'
+        )
+        .style('font-size', '1.5em')
+        .style('font-weight', 'bold')
+        .style('text-anchor', 'middle')
+        .text(chartName);
+  
+      // text label & styling for the x axis
+      chart
+        .append('text')
+        .attr('x', svgWidth / 2 + margin / 2)
+        .attr('y', svgHeight + margin + margin / 2)
+        .attr('dy', '1em')
+        .style('font-size', '1em')
+        .style('font-weight', 'bold')
+        .style('text-anchor', 'middle')
+        .text(xTitle);
+  
+      // text label & styling for the y axis
+      chart
+        .append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('x', -svgHeight / 2 - margin)
+        .attr('y', -5)
+        .attr('dy', '1em')
+        .style('font-size', '1em')
+        .style('font-weight', 'bold')
+        .style('text-anchor', 'middle')
+        .text(yTitle);
     `);
-  }
-
-  componentDidUpdate() {
-    // everytime the component updates, we replot the graph.
-    document.querySelector('svg#plot_cont').innerHTML = '';
-    this.plotGraph();
-  }
-
-  componentDidMount() {
-    this.plotGraph();
-    this.updateCode(this.props.options);
-  }
-
-  shouldComponentUpdate(nextProps) {
-    /*
-     * We need to manually decide wether or not the component should
-     * re-render. Everytime a prop that relates to the graph changes,
-     * we need to replot the graph. There are two problems:
-     *
-     * 1) Every time we update the graph, we change a prop that represents
-     * the code related with the graph being displayed on page. This would
-     * trigger another re-render, so we need to tell the component NOT
-     * to re-render if what fired it was a change to the codeText prop.
-     *
-     * 2) When the user clicks and drags on the color picker, it changes
-     * the props many times. This calls the plotGraph function too
-     * frequently, so we need to debounce it so it only gets called, at
-     * max, once every 100ms.
-     */
-    if (Date.now() - this.debouncerTracker < 100) return false;
-    this.debouncerTracker = Date.now();
-
-    if (nextProps.codeText === this.props.codeText) {
-      this.updateCode(nextProps.options);
-      return true;
-    }
-    return false;
   }
 }
 

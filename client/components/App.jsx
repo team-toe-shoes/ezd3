@@ -23,6 +23,7 @@ class App extends Component {
       ],
       // will be modified to reflect the code used to build the graph
       codeText: '',
+
       // reflect the type of graph chosen by user
       // defaulted to Bar Chart
       type: 'BarChart',
@@ -41,17 +42,17 @@ class App extends Component {
           'yTitle',
           'transition',
         ],
-        PieChart: ['barColor', 'chartHeight', 'chartWidth'],
+        PieChart: ['chartWidth', 'chartHeight', 'chartTitle'],
       },
 
       // all option options
       chartTitle: { value: 'Name', type: 'text' },
       chartHeight: { value: 300, type: 'number' },
       chartWidth: { value: 450, type: 'number' },
-      chartBGColor: { value: '#ffffff', type: 'color' },
-      xTitle: { value: 'xTitle', type: 'text' },
-      yTitle: { value: 'yTitle', type: 'text' },
-      barColor: { value: '#003078', type: 'color' },
+      chartBGColor: { value: '#fbfbfb', type: 'color' },
+      xTitle: { value: 'Quartiles', type: 'text' },
+      yTitle: { value: 'Rainfall (cm)', type: 'text' },
+      barColor: { value: '#7e8471', type: 'color' },
       barMargin: { value: 2, type: 'number' },
       transition: { name: 'false', type: 'checkbox' },
     };
