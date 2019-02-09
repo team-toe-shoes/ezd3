@@ -1,6 +1,6 @@
-import React from "react";
-import { Component } from "react";
-import * as d3 from "d3";
+import React from 'react';
+import { Component } from 'react';
+import * as d3 from 'd3';
 
 class BarChart extends Component {
   constructor() {
@@ -16,40 +16,43 @@ class BarChart extends Component {
     const barWidth = svgWidth / dataset.length;
     const barColor = this.props.options.barColor.value;
     const bgColor = this.props.options.chartBGColor.value;
-    const margin = 20;
+    const chartName = this.props.options.chartTitle.value;
+    const yTitle = this.props.options.yTitle.value;
+    const xTitle = this.props.options.xTitle.value;
+    const margin = 40;
 
     const y = d3
       .scaleLinear()
-      .domain([0, Math.max(...dataset)])
+      .domain([0, Math.max(...dataset) + 5])
       .range([svgHeight, 0]);
 
     const x = d3
       .scaleBand()
-      .domain(["A", "B", "C", "D", "E", "F"])
+      .domain(['A', 'B', 'C', 'D', 'E', 'F'])
       .rangeRound([0, svgWidth])
       .padding(0);
 
-    const chart = d3.select("svg#plot_cont");
+    const chart = d3.select('svg#plot_cont');
 
     chart
-      .style("background-color", bgColor)
-      .attr("width", svgWidth + 2 * margin)
-      .attr("height", svgHeight + 2 * margin)
-      .append("g")
-      .attr("transform", "translate(" + margin + "," + margin + ")")
-      .selectAll("rect")
+      .style('background-color', bgColor)
+      .attr('width', svgWidth + 2 * margin)
+      .attr('height', svgHeight + 2 * margin)
+      .append('g')
+      .attr('transform', 'translate(' + margin + ',' + margin + ')')
+      .selectAll('rect')
       .data(dataset)
       .enter()
-      .append("rect")
-      .attr("fill", barColor)
-      .attr("width", barWidth - barPadding)
-      .attr("height", function(d) {
+      .append('rect')
+      .attr('fill', barColor)
+      .attr('width', barWidth - barPadding)
+      .attr('height', function(d) {
         return svgHeight - y(d);
       })
-      .attr("x", function(d, i) {
+      .attr('x', function(d, i) {
         return barWidth * i + parseInt(barPadding) / 2;
       })
-      .attr("y", function(d) {
+      .attr('y', function(d) {
         return y(d);
       });
 
@@ -58,17 +61,43 @@ class BarChart extends Component {
     const yAxis = d3.axisLeft(y).ticks(5);
 
     chart
-      .append("g")
-      .attr(
-        "transform",
-        "translate(" + margin + "," + (svgHeight + margin) + ")"
-      )
+      .append('g')
+      .attr('transform', 'translate(' + margin + ',' + (svgHeight + margin) + ')')
       .call(xAxis);
 
     chart
-      .append("g")
-      .attr("transform", "translate(" + margin + "," + margin + ")")
+      .append('g')
+      .attr('transform', 'translate(' + margin + ',' + margin + ')')
       .call(yAxis);
+
+    // adding text label for Chart Name
+    chart
+      .append('text')
+      .attr(
+        'transform',
+        'translate(' + (svgWidth / 2 - margin) + ',' + (Math.max(...dataset) + margin) + ')',
+      )
+      .style('text-anchor', 'middle')
+      .text(chartName);
+
+    // text label for the x axis
+    chart
+      .append('text')
+      .attr('y', +svgHeight + margin + 20)
+      .attr('x', +svgWidth / 2)
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .text(xTitle);
+
+    // text label for the y axis
+    chart
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0)
+      .attr('x', -svgHeight / 2 - margin)
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .text(yTitle);
   }
 
   updateCode(nextProps) {
@@ -142,7 +171,7 @@ class BarChart extends Component {
   }
 
   componentDidUpdate() {
-    document.querySelector("svg#plot_cont").innerHTML = "";
+    document.querySelector('svg#plot_cont').innerHTML = '';
     this.plotGraph();
   }
 
