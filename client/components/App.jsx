@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { MainWrapper, Title } from './../Styles/styledComponents';
+import {
+  MainWrapper,
+  Title,
+  GraphAndOptionsWrapper
+} from "./../Styles/styledComponents";
 import OptionsDisplay from "./OptionsDisplay.jsx";
 import ChartDisplay from "./ChartDisplay.jsx";
 import Navbar from "./Navbar.jsx";
 import Footer from "./Footer.jsx";
+import CodeDisplay from "./CodeDisplay.jsx";
 
 class App extends Component {
   constructor() {
@@ -25,9 +30,9 @@ class App extends Component {
         ]
       },
       chartTitle: { value: "Name", type: "text" },
-      chartHeight: { value: 500, type: "number" },
-      chartWidth: { value: 700, type: "number" },
-      chartBGColor: { value: "#fff", type: "color" },
+      chartHeight: { value: 300, type: "number" },
+      chartWidth: { value: 450, type: "number" },
+      chartBGColor: { value: "#ffffff", type: "color" },
       xTitle: { value: "xTitle", type: "text" },
       yTitle: { value: "xTitle", type: "text" },
       barColor: { value: "#003078", type: "color" },
@@ -63,12 +68,19 @@ class App extends Component {
       <MainWrapper>
         <Navbar />
         <Title> D3 Simplifier </Title>
-        <OptionsDisplay
-          options={optionsToPass}
-          handleChange={this.handleChange}
-        />
-        <ChartDisplay options={optionsToPass} data={this.state.data} 
-          updateCodeText={this.updateCodeText} codeText={this.state.codeText} />
+        <GraphAndOptionsWrapper>
+          <OptionsDisplay
+            options={optionsToPass}
+            handleChange={this.handleChange}
+          />
+          <ChartDisplay 
+            options={optionsToPass}
+            data={this.state.data}
+            updateCodeText={this.updateCodeText}
+            codeText={this.state.codeText} 
+          />
+        </GraphAndOptionsWrapper>
+        
         <CodeDisplay codeText={this.state.codeText} />
       </MainWrapper>
     );

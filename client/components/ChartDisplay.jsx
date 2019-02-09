@@ -5,7 +5,6 @@ import { ChartWrapper} from "./../Styles/styledComponents";
 const ChartDisplay = props => {
   return (
     <ChartWrapper>
-      Chart display:
       <BarChart options={props.options} data={props.data} 
         updateCodeText={props.updateCodeText} codeText={props.codeText} />
     </ChartWrapper>
