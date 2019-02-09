@@ -1,12 +1,12 @@
 import React from "react";
 import BarChart from "./BarChart.jsx";
+import { ChartWrapper} from "./../Styles/styledComponents";
 
 const ChartDisplay = props => {
   return (
-    <div>
-      Chart display:
+    <ChartWrapper>
       <BarChart options={props.options} data={props.data} />
-    </div>
+    </ChartWrapper>
   );
 };
 
