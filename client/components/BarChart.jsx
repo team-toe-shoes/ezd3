@@ -114,6 +114,20 @@ class BarChart extends Component {
       .style('font-weight', 'bold')
       .style('text-anchor', 'middle')
       .text(yTitle);
+
+    d3.selectAll('rect')
+      .on('mouseover', function(d, i) {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .style('opacity', 0.7);
+      })
+      .on('mouseout', function(d, i) {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .style('opacity', 1);
+      });
   }
 
   updateCode(nextProps) {

@@ -10,12 +10,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      data: [
-        {Q1: 20},
-        {Q2: 70},
-        {Q3: 5},
-        {Q4: 30},
-      ],
+      data: [{ Q1: 20 }, { Q2: 70 }, { Q3: 15 }, { Q4: 30 }],
       codeText: '',
       type: 'barChart',
       graphs: {
@@ -28,6 +23,7 @@ class App extends Component {
           'chartTitle',
           'xTitle',
           'yTitle',
+          'transition',
         ],
       },
       chartTitle: { value: 'Name', type: 'text' },
@@ -38,6 +34,7 @@ class App extends Component {
       yTitle: { value: 'yTitle', type: 'text' },
       barColor: { value: '#003078', type: 'color' },
       barMargin: { value: 2, type: 'number' },
+      transition: { value: 'mouseover', type: 'string' },
     };
     this.handleChange = this.handleChange.bind(this);
     this.updateCodeText = this.updateCodeText.bind(this);
