@@ -176,7 +176,6 @@ class BarChart extends Component {
   }
 
   componentDidMount() {
-    console.log("mount");
     this.plotGraph();
     this.updateCode(this.props.options);
   }
