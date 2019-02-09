@@ -71,18 +71,15 @@ class BarChart extends Component {
     // adding text label for Chart Name
     chart
       .append('text')
-      .attr(
-        'transform',
-        'translate(' + (svgWidth / 2 - margin) + ',' + (Math.max(...dataset) + margin) + ')',
-      )
+      .attr('transform', 'translate(' + svgWidth / 2 + ',' + (Math.max(...dataset) + margin) + ')')
       .style('text-anchor', 'middle')
       .text(chartName);
 
     // text label for the x axis
     chart
       .append('text')
-      .attr('y', +svgHeight + margin + 20)
-      .attr('x', +svgWidth / 2)
+      .attr('y', svgHeight + margin + margin / 2)
+      .attr('x', svgWidth / 2 + margin / 2)
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
       .text(xTitle);
