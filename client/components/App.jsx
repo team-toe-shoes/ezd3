@@ -16,21 +16,21 @@ class App extends Component {
     super();
     this.state = {
       data: [
-        {Q1: 20},
-        {Q2: 70},
-        {Q3: 5},
-        {Q4: 30},
+        {name: 'Q1', value: 20},
+        {name: 'Q2', value: 70},
+        {name: 'Q3', value: 5},
+        {name: 'Q4', value: 30},
       ],
       // will be modified to reflect the code used to build the graph
       codeText: '',
       // reflect the type of graph chosen by user
       // defaulted to Bar Chart
-      type: 'barChart',
+      type: 'PieChart',
 
       // options that can be modified by user for each type 
       // of graphs available in the app
       graphs: {
-        barChart: [
+        BarChart: [
           'barColor',
           'barMargin',
           'chartHeight',
@@ -40,6 +40,11 @@ class App extends Component {
           'xTitle',
           'yTitle',
         ],
+        PieChart: [
+          'barColor',
+          'chartHeight',
+          'chartWidth',
+        ]
       },
 
       // all option options
@@ -80,7 +85,7 @@ class App extends Component {
   }
 
   render() {
-    const { graphs, type } = this.state;
+    const { graphs, type, codeText, data } = this.state;
 
     // filter out the options to only pass the props that correspond
     // to a chosen graph
@@ -98,13 +103,14 @@ class App extends Component {
           <OptionsDisplay options={optionsToPass} handleChange={this.handleChange} />
           <ChartDisplay
             options={optionsToPass}
-            data={this.state.data}
+            data={data}
             updateCodeText={this.updateCodeText}
-            codeText={this.state.codeText}
+            codeText={codeText}
+            type={type}
           />
         </GraphAndOptionsWrapper>
 
-        <CodeDisplay codeText={this.state.codeText} />
+        <CodeDisplay codeText={codeText} />
         <Footer />
       </MainWrapper>
     );

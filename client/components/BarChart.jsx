@@ -1,5 +1,4 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import * as d3 from 'd3';
 
 class BarChart extends Component {
@@ -14,10 +13,8 @@ class BarChart extends Component {
 
     // populates the yData and xData arrays
     for (let dataPair of this.props.data) {
-      const xValue = Object.keys(dataPair)[0];
-      const yValue = dataPair[xValue];
-      xData.push(xValue);
-      yData.push(yValue);
+      xData.push(dataPair.name);
+      yData.push(dataPair.value);
     }
 
     const svgWidth = this.props.options.chartWidth.value;
@@ -223,9 +220,6 @@ class BarChart extends Component {
     return false;
   }
 
-  render() {
-    return <svg id="plot_cont" />;
-  }
 }
 
 export default BarChart;
