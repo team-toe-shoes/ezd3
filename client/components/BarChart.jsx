@@ -9,31 +9,47 @@ class BarChart extends Component {
   }
 
   plotGraph() {
-    const dataset = [10, 16, 20, 15, 14, 7];
+    const xData = [];
+    const yData = [];
+
+    // populates the yData and xData arrays
+    for (let dataPair of this.props.data) {
+      const xValue = Object.keys(dataPair)[0];
+      const yValue = dataPair[xValue];
+      xData.push(xValue);
+      yData.push(yValue);
+    }
+
     const svgWidth = this.props.options.chartWidth.value;
     const svgHeight = this.props.options.chartHeight.value;
     const barPadding = this.props.options.barMargin.value;
-    const barWidth = svgWidth / dataset.length;
     const barColor = this.props.options.barColor.value;
     const bgColor = this.props.options.chartBGColor.value;
     const chartName = this.props.options.chartTitle.value;
     const yTitle = this.props.options.yTitle.value;
     const xTitle = this.props.options.xTitle.value;
-    const margin = 40;
+    const barWidth = svgWidth / yData.length;
+    const margin = 40;  
 
+    // Creates a linear scale for the y-axis. The domain represents the values
+    // on the scale. The range, the height of the y-axis on the svg element.
     const y = d3
       .scaleLinear()
-      .domain([0, Math.max(...dataset) + 5])
+      .domain([0, Math.max(...yData)])
       .range([svgHeight, 0]);
 
+    // For the x-axis, we have a discrete distribution, so we 
+    // need to use the .scaleBand() method.
     const x = d3
       .scaleBand()
-      .domain(['A', 'B', 'C', 'D', 'E', 'F'])
+      .domain(xData)
       .rangeRound([0, svgWidth])
       .padding(0);
 
     const chart = d3.select('svg#plot_cont');
 
+    // We style the <svg> element, as well as all the <rect> 
+    // created that represent the bars in our graph
     chart
       .style('background-color', bgColor)
       .attr('width', svgWidth + 2 * margin)
@@ -41,7 +57,7 @@ class BarChart extends Component {
       .append('g')
       .attr('transform', 'translate(' + margin + ',' + margin + ')')
       .selectAll('rect')
-      .data(dataset)
+      .data(yData)
       .enter()
       .append('rect')
       .attr('fill', barColor)
@@ -55,11 +71,13 @@ class BarChart extends Component {
       .attr('y', function(d) {
         return y(d);
       });
-
+    
+    // creates and style the x and y axis.  
     const xAxis = d3.axisBottom(x);
-
     const yAxis = d3.axisLeft(y).ticks(5);
 
+    // the .attr() call creates the axis, while the .call() 
+    // creates the ticks.
     chart
       .append('g')
       .attr('transform', 'translate(' + margin + ',' + (svgHeight + margin) + ')')
@@ -75,7 +93,7 @@ class BarChart extends Component {
       .append('text')
       .attr(
         'transform',
-        'translate(' + (svgWidth / 2 - margin) + ',' + (Math.max(...dataset) + margin) + ')',
+        'translate(' + (svgWidth / 2 - margin) + ',' + (Math.max(...yData) + margin) + ')',
       )
       .style('text-anchor', 'middle')
       .text(chartName);
@@ -156,9 +174,7 @@ class BarChart extends Component {
       
       // creates and style the x and y axis.  
       const xAxis = d3.axisBottom(x);
-
-      const yAxis = d3.axisLeft(y)
-        .ticks(5);
+      const yAxis = d3.axisLeft(y).ticks(5);
 
       chart.append("g")
         .attr("transform", "translate(" + margin + "," + (svgHeight + margin) + ")")
@@ -171,6 +187,7 @@ class BarChart extends Component {
   }
 
   componentDidUpdate() {
+    // everytime the component updates, we replot the graph.
     document.querySelector('svg#plot_cont').innerHTML = '';
     this.plotGraph();
   }
@@ -181,6 +198,21 @@ class BarChart extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
+     /*
+     * We need to manually decide wether or not the component should
+     * re-render. Everytime a prop that relates to the graph changes,
+     * we need to replot the graph. There are two problems:
+     * 
+     * 1) Every time we update the graph, we change a prop that represents
+     * the code related with the graph being displayed on page. This would
+     * trigger another re-render, so we need to tell the component NOT
+     * to re-render if what fired it was a change to the codeText prop.
+     * 
+     * 2) When the user clicks and drags on the color picker, it changes
+     * the props many times. This calls the plotGraph function too
+     * frequently, so we need to debounce it so it only gets called, at
+     * max, once every 100ms.
+     */
     if (Date.now() - this.debouncerTracker < 100) return false;
     this.debouncerTracker = Date.now();
 
