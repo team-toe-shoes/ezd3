@@ -29,7 +29,7 @@ class BarChart extends Component {
     const yTitle = this.props.options.yTitle.value;
     const xTitle = this.props.options.xTitle.value;
     const barWidth = svgWidth / yData.length;
-    const margin = 40;  
+    const margin = 40;
 
     // Creates a linear scale for the y-axis. The domain represents the values
     // on the scale. The range, the height of the y-axis on the svg element.
@@ -88,32 +88,38 @@ class BarChart extends Component {
       .attr('transform', 'translate(' + margin + ',' + margin + ')')
       .call(yAxis);
 
-    // adding text label for Chart Name
+    // adding text label & stlying for Chart Name
     chart
       .append('text')
       .attr(
         'transform',
-        'translate(' + (svgWidth / 2 - margin) + ',' + (Math.max(...yData) + margin) + ')',
+        'translate(' + (svgWidth / 2 + margin) + ',' + (Math.max(...yData) - margin) + ')',
       )
+      .style('font-size', '1.5em')
+      .style('font-weight', 'bold')
       .style('text-anchor', 'middle')
       .text(chartName);
 
-    // text label for the x axis
+    // text label & styling for the x axis
     chart
       .append('text')
-      .attr('y', +svgHeight + margin + 20)
-      .attr('x', +svgWidth / 2)
+      .attr('x', svgWidth / 2 + margin / 2)
+      .attr('y', svgHeight + margin + margin / 2)
       .attr('dy', '1em')
+      .style('font-size', '1em')
+      .style('font-weight', 'bold')
       .style('text-anchor', 'middle')
       .text(xTitle);
 
-    // text label for the y axis
+    // text label & styling for the y axis
     chart
       .append('text')
       .attr('transform', 'rotate(-90)')
-      .attr('y', 0)
       .attr('x', -svgHeight / 2 - margin)
+      .attr('y', -5)
       .attr('dy', '1em')
+      .style('font-size', '1em')
+      .style('font-weight', 'bold')
       .style('text-anchor', 'middle')
       .text(yTitle);
   }
@@ -219,7 +225,7 @@ class BarChart extends Component {
     if (nextProps.codeText === this.props.codeText) {
       this.updateCode(nextProps.options);
       return true;
-    } 
+    }
     return false;
   }
 
