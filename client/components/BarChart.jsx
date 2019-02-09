@@ -9,26 +9,36 @@ class BarChart extends Component {
   }
 
   plotGraph() {
-    const dataset = [10, 16, 20, 15, 14, 7];
+    const xData = [];
+    const yData = [];
+
+    // populates the yData and xData arrays
+    for (let dataPair of this.props.data) {
+      const xValue = Object.keys(dataPair)[0];
+      const yValue = dataPair[xValue];
+      xData.push(xValue);
+      yData.push(yValue);
+    }
+
     const svgWidth = this.props.options.chartWidth.value;
     const svgHeight = this.props.options.chartHeight.value;
     const barPadding = this.props.options.barMargin.value;
-    const barWidth = svgWidth / dataset.length;
     const barColor = this.props.options.barColor.value;
     const bgColor = this.props.options.chartBGColor.value;
     const chartName = this.props.options.chartTitle.value;
     const yTitle = this.props.options.yTitle.value;
     const xTitle = this.props.options.xTitle.value;
-    const margin = 40;
+    const barWidth = svgWidth / yData.length;
+    const margin = 40;  
 
     const y = d3
       .scaleLinear()
-      .domain([0, Math.max(...dataset) + 5])
+      .domain([0, Math.max(...yData) + 5])
       .range([svgHeight, 0]);
 
     const x = d3
       .scaleBand()
-      .domain(['A', 'B', 'C', 'D', 'E', 'F'])
+      .domain(xData)
       .rangeRound([0, svgWidth])
       .padding(0);
 
@@ -41,7 +51,7 @@ class BarChart extends Component {
       .append('g')
       .attr('transform', 'translate(' + margin + ',' + margin + ')')
       .selectAll('rect')
-      .data(dataset)
+      .data(yData)
       .enter()
       .append('rect')
       .attr('fill', barColor)
@@ -75,7 +85,7 @@ class BarChart extends Component {
       .append('text')
       .attr(
         'transform',
-        'translate(' + (svgWidth / 2 - margin) + ',' + (Math.max(...dataset) + margin) + ')',
+        'translate(' + (svgWidth / 2 - margin) + ',' + (Math.max(...yData) + margin) + ')',
       )
       .style('text-anchor', 'middle')
       .text(chartName);
