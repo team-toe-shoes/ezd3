@@ -10,7 +10,12 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      data: [20, 50, 100, 70],
+      data: [
+        {Q1: 20},
+        {Q2: 70},
+        {Q3: 5},
+        {Q4: 30},
+      ],
       codeText: '',
       type: 'barChart',
       graphs: {
