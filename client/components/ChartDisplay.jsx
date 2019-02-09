@@ -5,7 +5,8 @@ const ChartDisplay = props => {
   return (
     <div>
       Chart display:
-      <BarChart options={props.options} data={props.data} />
+      <BarChart options={props.options} data={props.data} 
+        updateCodeText={props.updateCodeText} codeText={props.codeText} />
     </div>
   );
 };

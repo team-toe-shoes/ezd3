@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import {  MainWrapper, Title } from './../Styles/styledComponents';
+import { MainWrapper, Title } from './../Styles/styledComponents';
 import OptionsDisplay from "./OptionsDisplay.jsx";
 import ChartDisplay from "./ChartDisplay.jsx";
+import CodeDisplay from "./CodeDisplay.jsx";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       data: [20, 50, 100, 70],
+      codeText: "",
       type: "barChart",
       graphs: {
         barChart: [
@@ -31,6 +33,7 @@ class App extends Component {
       barMargin: { value: 2, type: "number" }
     };
     this.handleChange = this.handleChange.bind(this);
+    this.updateCodeText = this.updateCodeText.bind(this);
   }
 
   handleChange(e) {
@@ -43,6 +46,10 @@ class App extends Component {
     this.setState({
       [name]: newObj
     });
+  }
+
+  updateCodeText(codeText) {
+    this.setState({ codeText });
   }
 
   render() {
@@ -58,7 +65,9 @@ class App extends Component {
           options={optionsToPass}
           handleChange={this.handleChange}
         />
-        <ChartDisplay options={optionsToPass} data={this.state.data} />
+        <ChartDisplay options={optionsToPass} data={this.state.data} 
+          updateCodeText={this.updateCodeText} codeText={this.state.codeText} />
+        <CodeDisplay codeText={this.state.codeText} />
       </MainWrapper>
     );
   }
