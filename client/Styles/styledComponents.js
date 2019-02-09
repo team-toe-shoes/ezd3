@@ -25,15 +25,18 @@ export const MainWrapper = styled.main`
   overflow-x: scroll;
   box-shadow: 9 px 9 px 16 px - 4 px rgba(0, 0, 0, 1);
   margin-left: 2.5%;
+  height: 100%;
 `;
 
 
 export const OptionsWrapper = styled.section`
   flex-direction: column;
   display: flex;
+  justify-content: space-between;
+  height: 90%;
   flex-wrap: wrap;
   line-height: 2em;
-  margin-right: 2.5%;
+  margin: 1em 2.5% 0 1em;
 `;
 
 export const GraphAndOptionsWrapper = styled.section`
@@ -41,6 +44,7 @@ export const GraphAndOptionsWrapper = styled.section`
   justify-content: center;
   align-items: center;
   margin: 3em 0;
+  height: 375px;
 `;
 
 export const LabelWrapper = styled.div`
@@ -48,6 +52,8 @@ export const LabelWrapper = styled.div`
   align-items: baseline;
   max-width: 15em;
   justify-content: space-between;
+  font-family: 'Cantarell', sans-serif;
+  font-size: 1em;
 `;
 
 export const Input = styled.input`

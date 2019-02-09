@@ -3,10 +3,12 @@ import { Component } from 'react';
 import * as d3 from 'd3';
 
 class BarChart extends Component {
+  constructor() {
+    super();
+    this.debouncerTracker = 0;
+  }
+
   plotGraph() {
-    //   chartTitle: { value: "Name", type: "text" },
-    //   xTitle: { value: "xTitle", type: "text" },
-    //   yTitle: { value: "xTitle", type: "text" },
     const dataset = [10, 16, 20, 15, 14, 7];
     const svgWidth = this.props.options.chartWidth.value;
     const svgHeight = this.props.options.chartHeight.value;
@@ -98,23 +100,9 @@ class BarChart extends Component {
       .text(yTitle);
   }
 
-  componentDidMount() {
-    console.log('mount');
-    this.plotGraph();
-    this.updateCode(this.props.options);
-  }
-
-  // shouldComponentUpdate(nextProps) {
-  //   if (nextProps.codeText === this.props.codeText) {
-  //     this.updateCode(nextProps.options);
-  //     console.log('call');
-  //     return true;
-  //   }
-  //   return false;
-  // }
-
   updateCode(nextProps) {
     this.props.updateCodeText(`
+      // Define basic graph properties 
       const dataset = [10, 16, 20, 15, 14, 7];
       const svgWidth = ${nextProps.chartWidth.value};
       const svgHeight = ${nextProps.chartHeight.value};
@@ -124,25 +112,41 @@ class BarChart extends Component {
       const bgColor = ${nextProps.chartBGColor.value};
       const margin = 20;
 
+      // Set scale on y-axis. The domain represents the values
+      // on the scale. The range, the height of the y-axis on the 
+      // svg element.
       const y = d3.scaleLinear()
         .domain([0, Math.max(...dataset)])
         .range([svgHeight, 0]);
 
+      // For the x-axis, we have a discrete distribution, so we 
+      // need to use the .scaleBand() method.
       const x = d3.scaleBand()
         .domain(['A', 'B', 'C', 'D', 'E', 'F'])
         .rangeRound([0, svgWidth])
         .padding(0);
 
+      // 'svg#plot_cont' is the CSS-selector for the element we 
+      // want to plot the graph in.
       const chart = d3.select('svg#plot_cont');
 
       chart
+        // styles the svg component
         .style("background-color", bgColor)
         .attr('width', svgWidth + 2 * margin)
         .attr('height', svgHeight + 2 * margin)
+
+        // create a <g> element which the plot is gonna be
+        // drawn inside of
         .append('g')
           .attr('transform', 'translate(' + margin + ',' + margin + ')')
+
+        // select all <rect> inside of that <g> we just created.
+        // ps: there are none!  
         .selectAll('rect')
         .data(dataset)
+
+        // we append and style one <rect> for each value in our dataset.
         .enter().append('rect')
         .attr('fill', barColor)
         .attr("width", barWidth - barPadding)
@@ -150,6 +154,7 @@ class BarChart extends Component {
         .attr("x", function(d, i) { return barWidth * i + parseInt(barPadding) / 2; })
         .attr("y", function(d) { return y(d); });
       
+      // creates and style the x and y axis.  
       const xAxis = d3.axisBottom(x);
 
       const yAxis = d3.axisLeft(y)
@@ -168,6 +173,23 @@ class BarChart extends Component {
   componentDidUpdate() {
     document.querySelector('svg#plot_cont').innerHTML = '';
     this.plotGraph();
+  }
+
+  componentDidMount() {
+    console.log("mount");
+    this.plotGraph();
+    this.updateCode(this.props.options);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (Date.now() - this.debouncerTracker < 100) return false;
+    this.debouncerTracker = Date.now();
+
+    if (nextProps.codeText === this.props.codeText) {
+      this.updateCode(nextProps.options);
+      return true;
+    } 
+    return false;
   }
 
   render() {
