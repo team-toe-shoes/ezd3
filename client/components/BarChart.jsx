@@ -1,5 +1,6 @@
 import Chart from '../classes/Chart';
 import * as d3 from 'd3';
+import Chart from '../classes/Chart.js';
 
 class BarChart extends Chart {
   plotGraph() {
@@ -7,7 +8,7 @@ class BarChart extends Chart {
     const yData = [];
 
     // populates the yData and xData arrays
-    for (let dataPair of this.props.data) {
+    for (const dataPair of this.props.data) {
       xData.push(dataPair.name);
       yData.push(dataPair.value);
     }
@@ -22,6 +23,7 @@ class BarChart extends Chart {
     const xTitle = this.props.options.xTitle.value;
     const barWidth = svgWidth / yData.length;
     const margin = 40;
+    const transition = this.props.options.transition.value;
 
     // Creates a linear scale for the y-axis. The domain represents the values
     // on the scale. The range, the height of the y-axis on the svg element.
@@ -30,7 +32,7 @@ class BarChart extends Chart {
       .domain([0, Math.max(...yData)])
       .range([svgHeight, 0]);
 
-    // For the x-axis, we have a discrete distribution, so we 
+    // For the x-axis, we have a discrete distribution, so we
     // need to use the .scaleBand() method.
     const x = d3
       .scaleBand()
@@ -40,44 +42,38 @@ class BarChart extends Chart {
 
     const chart = d3.select('svg#plot_cont');
 
-    // We style the <svg> element, as well as all the <rect> 
+    // We style the <svg> element, as well as all the <rect>
     // created that represent the bars in our graph
     chart
       .style('background-color', bgColor)
       .attr('width', svgWidth + 2 * margin)
       .attr('height', svgHeight + 2 * margin)
       .append('g')
-      .attr('transform', 'translate(' + margin + ',' + margin + ')')
+      .attr('transform', `translate(${margin},${margin})`)
       .selectAll('rect')
       .data(yData)
       .enter()
       .append('rect')
       .attr('fill', barColor)
       .attr('width', barWidth - barPadding)
-      .attr('height', function(d) {
-        return svgHeight - y(d);
-      })
-      .attr('x', function(d, i) {
-        return barWidth * i + parseInt(barPadding) / 2;
-      })
-      .attr('y', function(d) {
-        return y(d);
-      });
-    
-    // creates and style the x and y axis.  
+      .attr('height', d => svgHeight - y(d))
+      .attr('x', (d, i) => barWidth * i + parseInt(barPadding) / 2)
+      .attr('y', d => y(d));
+
+    // creates and style the x and y axis.
     const xAxis = d3.axisBottom(x);
     const yAxis = d3.axisLeft(y).ticks(5);
 
-    // the .attr() call creates the axis, while the .call() 
+    // the .attr() call creates the axis, while the .call()
     // creates the ticks.
     chart
       .append('g')
-      .attr('transform', 'translate(' + margin + ',' + (svgHeight + margin) + ')')
+      .attr('transform', `translate(${margin},${svgHeight + margin})`)
       .call(xAxis);
 
     chart
       .append('g')
-      .attr('transform', 'translate(' + margin + ',' + margin + ')')
+      .attr('transform', `translate(${margin},${margin})`)
       .call(yAxis);
 
     // adding text label & stlying for Chart Name
@@ -85,7 +81,7 @@ class BarChart extends Chart {
       .append('text')
       .attr(
         'transform',
-        'translate(' + (svgWidth / 2 + margin) + ',' + (Math.max(...yData) - margin) + ')'
+        'translate(' + (svgWidth / 2 + margin) + ',' + (Math.max(...yData) - margin) + ')',
       )
       .style('font-size', '1.5em')
       .style('font-weight', 'bold')
@@ -114,6 +110,22 @@ class BarChart extends Chart {
       .style('font-weight', 'bold')
       .style('text-anchor', 'middle')
       .text(yTitle);
+
+    if (transition === '') {
+      d3.selectAll('rect')
+        .on('mouseover', function(d, i) {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .style('opacity', 0.7);
+        })
+        .on('mouseout', function(d, i) {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .style('opacity', 1);
+        });
+    }
   }
 
   updateCode(nextProps) {

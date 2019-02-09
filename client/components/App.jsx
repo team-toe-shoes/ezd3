@@ -16,19 +16,19 @@ class App extends Component {
     super();
     this.state = {
       data: [
-        {name: 'Q1', value: 20},
-        {name: 'Q2', value: 70},
-        {name: 'Q3', value: 5},
-        {name: 'Q4', value: 30},
+        { name: 'Q1', value: 20 },
+        { name: 'Q2', value: 70 },
+        { name: 'Q3', value: 5 },
+        { name: 'Q4', value: 30 },
       ],
       // will be modified to reflect the code used to build the graph
       codeText: '',
-      
+
       // reflect the type of graph chosen by user
       // defaulted to Bar Chart
-      type: 'PieChart',
+      type: 'BarChart',
 
-      // options that can be modified by user for each type 
+      // options that can be modified by user for each type
       // of graphs available in the app
       graphs: {
         BarChart: [
@@ -40,12 +40,9 @@ class App extends Component {
           'chartTitle',
           'xTitle',
           'yTitle',
+          'transition',
         ],
-        PieChart: [
-          'chartWidth',
-          'chartHeight',
-          'chartTitle',
-        ]
+        PieChart: ['chartWidth', 'chartHeight', 'chartTitle'],
       },
 
       // all option options
@@ -57,6 +54,7 @@ class App extends Component {
       yTitle: { value: 'Rainfall (cm)', type: 'text' },
       barColor: { value: '#7e8471', type: 'color' },
       barMargin: { value: 2, type: 'number' },
+      transition: { name: 'false', type: 'checkbox' },
     };
 
     // binding functions that are passed to children components
