@@ -2,6 +2,7 @@ import React from 'react';
 import { LabelWrapper, Input } from "./../Styles/styledComponents";
 
 const OptionDisplay = props => {
+  // beautify the display of the option
   const optionName = props.name
     .replace("barColor", "Bar Color")
     .replace("barMargin", "Bar Margin")
