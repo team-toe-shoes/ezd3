@@ -32,7 +32,8 @@ export const OptionsWrapper = styled.section`
   justify-content: space-between;
   flex-wrap: wrap;
   line-height: 2em;
-  margin: 40px 0;
+  margin: 40px 10px 0 40px;
+  min-width: 175px;
 `;
 
 export const GraphAndOptionsWrapper = styled.section`
@@ -49,9 +50,19 @@ export const LabelWrapper = styled.div`
   justify-content: space-between;
   font-family: 'Cantarell', sans-serif;
   font-size: 1em;
+  padding: 0.2em;
+  cursor: pointer;
+
+  & > * {
+    cursor: pointer;
+  }
 
   & > input {
     margin: 0;
+  }
+
+  &:hover {
+    background-color: #f4f6f7;
   }
 `;
 
@@ -59,10 +70,13 @@ export const Input = styled.input`
   margin: 0 2em;
   width: 3em;
   font-size: inherit;
+
+  &[name="yTitle"], &[name="xTitle"], &[name="chartTitle"] {
+    width: 6em;
+  }
 `;
 
 export const FooterWrapper = styled.footer`
   font-size: 0.9em;
   margin: 3em 0 1em 0;
 `;
-

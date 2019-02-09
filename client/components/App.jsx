@@ -34,9 +34,9 @@ class App extends Component {
       chartHeight: { value: 300, type: 'number' },
       chartWidth: { value: 450, type: 'number' },
       chartBGColor: { value: '#fbfbfb', type: 'color' },
-      xTitle: { value: 'xTitle', type: 'text' },
-      yTitle: { value: 'yTitle', type: 'text' },
-      barColor: { value: '#001230', type: 'color' },
+      xTitle: { value: 'Quartiles', type: 'text' },
+      yTitle: { value: 'Rainfall (cm)', type: 'text' },
+      barColor: { value: '#7e8471', type: 'color' },
       barMargin: { value: 2, type: 'number' },
     };
     this.handleChange = this.handleChange.bind(this);
