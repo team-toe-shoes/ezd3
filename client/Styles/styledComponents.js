@@ -23,6 +23,7 @@ export const MainWrapper = styled.main`
   box-shadow: 9 px 9 px 16 px - 4 px rgba(0, 0, 0, 1);
   margin-left: 2.5%;
   height: 100%;
+  overflow-y: auto;
 `;
 
 export const OptionsWrapper = styled.section`
@@ -40,7 +41,7 @@ export const GraphAndOptionsWrapper = styled.section`
   justify-content: center;
   align-items: center;
   margin: 3em 0;
-  height: 375px;
+  height: 400px;
 `;
 
 export const LabelWrapper = styled.div`
