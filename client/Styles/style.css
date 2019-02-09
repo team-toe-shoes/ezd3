@@ -1,5 +1,13 @@
-html,
-body,
+html, body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: #fbfbfb;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 #root {
   height: 100%;
   width: 100%;

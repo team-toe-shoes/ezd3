@@ -33,10 +33,10 @@ class App extends Component {
       chartTitle: { value: 'Name', type: 'text' },
       chartHeight: { value: 300, type: 'number' },
       chartWidth: { value: 450, type: 'number' },
-      chartBGColor: { value: '#ffffff', type: 'color' },
+      chartBGColor: { value: '#fbfbfb', type: 'color' },
       xTitle: { value: 'xTitle', type: 'text' },
       yTitle: { value: 'yTitle', type: 'text' },
-      barColor: { value: '#003078', type: 'color' },
+      barColor: { value: '#001230', type: 'color' },
       barMargin: { value: 2, type: 'number' },
     };
     this.handleChange = this.handleChange.bind(this);

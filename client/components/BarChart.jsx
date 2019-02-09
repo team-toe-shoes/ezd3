@@ -121,29 +121,34 @@ class BarChart extends Component {
   updateCode(nextProps) {
     this.props.updateCodeText(`
       // Define basic graph properties 
-      const dataset = [10, 16, 20, 15, 14, 7];
-      const svgWidth = ${nextProps.chartWidth.value};
-      const svgHeight = ${nextProps.chartHeight.value};
-      const barPadding = ${nextProps.barMargin.value};
-      const barWidth = ${nextProps.chartWidth.value};
-      const barColor = ${nextProps.barColor.value};
-      const bgColor = ${nextProps.chartBGColor.value};
-      const margin = 20;
+      const xData = [20, 70, 5, 30];
+      const yData = ['Q1', 'Q2', 'Q3', 'Q4'];
+      const svgWidth = ${nextProps.options.chartWidth.value};
+      const svgHeight = ${nextProps.options.chartHeight.value};
+      const barPadding = ${nextProps.options.barMargin.value};
+      const barColor = ${nextProps.options.barColor.value};
+      const bgColor = ${nextProps.options.chartBGColor.value};
+      const chartName = ${nextProps.options.chartTitle.value};
+      const yTitle = ${nextProps.options.yTitle.value};
+      const xTitle = ${nextProps.options.xTitle.value};
+      const barWidth = ${nextProps.options.chartWidth.value / 4};
+      const margin = 40;  
 
-      // Set scale on y-axis. The domain represents the values
-      // on the scale. The range, the height of the y-axis on the 
-      // svg element.
-      const y = d3.scaleLinear()
-        .domain([0, Math.max(...dataset)])
+      // Creates a linear scale for the y-axis. The domain represents the values
+      // on the scale. The range, the height of the y-axis on the svg element.
+      const y = d3
+        .scaleLinear()
+        .domain([0, Math.max(...yData)])
         .range([svgHeight, 0]);
-
+  
       // For the x-axis, we have a discrete distribution, so we 
       // need to use the .scaleBand() method.
-      const x = d3.scaleBand()
-        .domain(['A', 'B', 'C', 'D', 'E', 'F'])
+      const x = d3
+        .scaleBand()
+        .domain(xData)
         .rangeRound([0, svgWidth])
         .padding(0);
-
+  
       // 'svg#plot_cont' is the CSS-selector for the element we 
       // want to plot the graph in.
       const chart = d3.select('svg#plot_cont');
@@ -194,7 +199,7 @@ class BarChart extends Component {
 
   componentDidMount() {
     this.plotGraph();
-    this.updateCode(this.props.options);
+    this.updateCode(this.props);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -217,7 +222,7 @@ class BarChart extends Component {
     this.debouncerTracker = Date.now();
 
     if (nextProps.codeText === this.props.codeText) {
-      this.updateCode(nextProps.options);
+      this.updateCode(nextProps);
       return true;
     } 
     return false;
