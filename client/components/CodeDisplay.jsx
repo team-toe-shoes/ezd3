@@ -4,23 +4,11 @@ import "../Styles/prism.css";
 
 class CodeDisplay extends Component {
   componentDidUpdate() {
+    // We need to re-style the code everytime we change it
     Prism.highlightAll();
   }
 
   render() {
-    const code = this.props.codeText;
-    const codeArr = [];
-    let currStr = '';
-    for (let char of code) {
-      if (char !== '\n') {
-        currStr += char;
-      } else {
-        codeArr.push(<p>{currStr}</p>);
-        currStr = '';
-      }
-    }
-    codeArr.push(<p>{currStr}</p>);
-
     return (      
       <pre>
         <code className="language-javascript">
