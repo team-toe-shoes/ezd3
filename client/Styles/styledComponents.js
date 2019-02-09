@@ -1,9 +1,6 @@
 import styled from 'styled-components';
-import React from 'react';
-import BarChart from './../components/BarChart.jsx'
 
 //TODO: look up how to style root and body with styled components 
-
 export const MainWrapper = styled.main`
     font-family: font-family: 'Noto Sans', sans-serif;
     text-align: center;
@@ -26,7 +23,6 @@ export const MainWrapper = styled.main`
   box-shadow: 9 px 9 px 16 px - 4 px rgba(0, 0, 0, 1);
   margin-left: 2.5%;
 `;
-
 
 export const OptionsWrapper = styled.section`
   flex-direction: column;
