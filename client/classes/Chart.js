@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class Chart extends Component {
   constructor() {
     super();
@@ -15,7 +14,7 @@ class Chart extends Component {
 
   componentDidMount() {
     this.plotGraph();
-    // this.updateCode(this.props.options);
+    this.updateCode(this.props.options);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -34,17 +33,15 @@ class Chart extends Component {
      * frequently, so we need to debounce it so it only gets called, at
      * max, once every 100ms.
      */
-    return true;
     if (Date.now() - this.debouncerTracker < 100) return false;
     this.debouncerTracker = Date.now();
 
     if (nextProps.codeText === this.props.codeText) {
-      // this.updateCode(nextProps.options);
+      this.updateCode(nextProps.options);
       return true;
     } 
     return false;
   }
-
 
   render() {
     return <svg id="plot_cont" />;

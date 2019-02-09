@@ -23,6 +23,7 @@ class App extends Component {
       ],
       // will be modified to reflect the code used to build the graph
       codeText: '',
+      
       // reflect the type of graph chosen by user
       // defaulted to Bar Chart
       type: 'PieChart',
@@ -41,9 +42,9 @@ class App extends Component {
           'yTitle',
         ],
         PieChart: [
-          'barColor',
-          'chartHeight',
           'chartWidth',
+          'chartHeight',
+          'chartTitle',
         ]
       },
 

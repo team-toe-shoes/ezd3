@@ -57,10 +57,6 @@ export const LabelWrapper = styled.div`
     cursor: pointer;
   }
 
-  & > input {
-    margin: 0;
-  }
-
   &:hover {
     background-color: #f4f6f7;
   }
@@ -70,6 +66,8 @@ export const Input = styled.input`
   margin: 0 2em;
   width: 3em;
   font-size: inherit;
+  text-align: center;
+  margin: 0;
 
   &[name="yTitle"], &[name="xTitle"], &[name="chartTitle"] {
     width: 6em;

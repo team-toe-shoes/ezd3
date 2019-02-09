@@ -1,12 +1,7 @@
-import React, { Component } from 'react';
+import Chart from '../classes/Chart';
 import * as d3 from 'd3';
 
-class BarChart extends Component {
-  constructor() {
-    super();
-    this.debouncerTracker = 0;
-  }
-
+class BarChart extends Chart {
   plotGraph() {
     const xData = [];
     const yData = [];
@@ -126,15 +121,15 @@ class BarChart extends Component {
       // Define basic graph properties 
       const xData = [20, 70, 5, 30];
       const yData = ['Q1', 'Q2', 'Q3', 'Q4'];
-      const svgWidth = ${nextProps.options.chartWidth.value};
-      const svgHeight = ${nextProps.options.chartHeight.value};
-      const barPadding = ${nextProps.options.barMargin.value};
-      const barColor = ${nextProps.options.barColor.value};
-      const bgColor = ${nextProps.options.chartBGColor.value};
-      const chartName = ${nextProps.options.chartTitle.value};
-      const yTitle = ${nextProps.options.yTitle.value};
-      const xTitle = ${nextProps.options.xTitle.value};
-      const barWidth = ${nextProps.options.chartWidth.value / 4};
+      const svgWidth = ${nextProps.chartWidth.value};
+      const svgHeight = ${nextProps.chartHeight.value};
+      const barPadding = ${nextProps.barMargin.value};
+      const barColor = ${nextProps.barColor.value};
+      const bgColor = ${nextProps.chartBGColor.value};
+      const chartName = ${nextProps.chartTitle.value};
+      const yTitle = ${nextProps.yTitle.value};
+      const xTitle = ${nextProps.xTitle.value};
+      const barWidth = ${nextProps.chartWidth.value / 4};
       const margin = 40;  
 
       // Creates a linear scale for the y-axis. The domain represents the values
@@ -228,44 +223,6 @@ class BarChart extends Component {
         .text(yTitle);
     `);
   }
-
-  componentDidUpdate() {
-    // everytime the component updates, we replot the graph.
-    document.querySelector('svg#plot_cont').innerHTML = '';
-    this.plotGraph();
-  }
-
-  componentDidMount() {
-    this.plotGraph();
-    this.updateCode(this.props);
-  }
-
-  shouldComponentUpdate(nextProps) {
-     /*
-     * We need to manually decide wether or not the component should
-     * re-render. Everytime a prop that relates to the graph changes,
-     * we need to replot the graph. There are two problems:
-     * 
-     * 1) Every time we update the graph, we change a prop that represents
-     * the code related with the graph being displayed on page. This would
-     * trigger another re-render, so we need to tell the component NOT
-     * to re-render if what fired it was a change to the codeText prop.
-     * 
-     * 2) When the user clicks and drags on the color picker, it changes
-     * the props many times. This calls the plotGraph function too
-     * frequently, so we need to debounce it so it only gets called, at
-     * max, once every 100ms.
-     */
-    if (Date.now() - this.debouncerTracker < 100) return false;
-    this.debouncerTracker = Date.now();
-
-    if (nextProps.codeText === this.props.codeText) {
-      this.updateCode(nextProps);
-      return true;
-    }
-    return false;
-  }
-
 }
 
 export default BarChart;
