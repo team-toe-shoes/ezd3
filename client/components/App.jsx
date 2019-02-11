@@ -17,7 +17,9 @@ class App extends Component {
     super();
     this.state = {
       data: [
-
+        { name: 'q1', value: 2 },
+        { name: 'q2', value: 3 },
+        { name: 'q3', value: 1 }
       ],
       // will be modified to reflect the code used to build the graph
       codeText: '',
@@ -130,7 +132,7 @@ class App extends Component {
             type={type}
           />
         </GraphAndOptionsWrapper>
-        <DataForms handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput}/>
+        <DataForms data={this.state.data} handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput}/>
         <CodeDisplay codeText={codeText} />
         <Footer />
       </MainWrapper>
