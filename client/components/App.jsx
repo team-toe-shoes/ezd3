@@ -116,6 +116,13 @@ class App extends Component {
       acc[option] = this.state[option];
       return acc;
     }, {});
+
+    // this.state.data.forEach(ele => {
+    //   console.log('test')
+    // })
+
+    console.log('test')
+
     return (
       <MainWrapper>
         {/* Navbar to be developed */}

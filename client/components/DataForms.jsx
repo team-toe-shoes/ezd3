@@ -7,13 +7,6 @@ class DataForms extends Component {
   }
 
   render() {
-
-    // const curData = [];
-
-    // this.props.data.forEach((ele) => {
-    //   console.log(ele)
-    // })
-
     return (
       <div>
         <input type="text" name="xInput" onChange={this.props.handleDataInput} />
