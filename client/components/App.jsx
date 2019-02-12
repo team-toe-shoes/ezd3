@@ -74,6 +74,7 @@ class App extends Component {
     this.updateCodeText = this.updateCodeText.bind(this);
     this.handleDataInput = this.handleDataInput.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.deleteColumn = this.deleteColumn.bind(this);
   }
 
   // handle user interaction with inputs
@@ -128,6 +129,17 @@ class App extends Component {
     }
   }
 
+  deleteColumn(e) {
+    let curData = this.state.data;
+    curData = curData.filter((ele) => {
+      return ele.name != e.target.name;
+    })
+
+    this.setState({
+      data: curData
+    })
+  }
+
   render() {
     const { graphs, type, codeText, data } = this.state;
 
@@ -160,7 +172,7 @@ class App extends Component {
             type={type}
           />
         </GraphAndOptionsWrapper>
-        <DataForms data={this.state.data} handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput}/>
+        <DataForms data={this.state.data} handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput} deleteColumn={this.deleteColumn} />
         <CodeDisplay codeText={codeText} />
         <Footer />
       </MainWrapper>
