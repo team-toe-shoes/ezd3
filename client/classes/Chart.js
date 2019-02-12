@@ -18,6 +18,7 @@ class Chart extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
+
      /*
      * We need to manually decide wether or not the component should
      * re-render. Everytime a prop that relates to the graph changes,

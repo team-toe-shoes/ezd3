@@ -4,32 +4,7 @@ class DataForms extends Component {
   constructor(props) {
     super(props)
 
-    // this.state = {
-    //   inputData: [],
-    //   xInput: '',
-    //   yInput: null
-    // }
-
-    // this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
   }
-
-  // handleChange(e) {
-  //   const { name, value } = e.target;
-  //   this.setState({
-  //     [name]: value
-  //   })
-  // }
-
-  // handleClick() {
-  //   const newXY = {
-  //     xInput: this.state.xInput,
-  //     yInput: this.state.yInput
-  //   };
-  //   this.setState({
-  //     inputData: [...this.state.inputData, newXY]
-  //   })
-  // }
 
   render() {
     return (
