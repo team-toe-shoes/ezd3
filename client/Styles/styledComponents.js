@@ -9,14 +9,14 @@ export const MainWrapper = styled.main`
   overflow-x: hidden;
   box-sizing: border-box;
 `;
-  
+
 export const Title = styled.h1`
   color: #001230;
   font-family: 'Major Mono Display', monospace;
   font-size: 4em;
   margin: 0.5em 0 1.5em 0;
 `;
-  
+
 export const ChartWrapper = styled.section`
   overflow-x: auto;
   overflow-y: auto;
@@ -32,8 +32,8 @@ export const OptionsWrapper = styled.section`
   justify-content: space-between;
   flex-wrap: wrap;
   line-height: 2em;
-  margin: 40px 10px 0 40px;
-  min-width: 175px;
+  margin: 40px 10px 0 18px;
+  min-width: 192px;
 `;
 
 export const GraphAndOptionsWrapper = styled.section`

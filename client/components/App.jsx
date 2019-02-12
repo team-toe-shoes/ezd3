@@ -20,6 +20,11 @@ class App extends Component {
         { name: 'Q2', value: 70 },
         { name: 'Q3', value: 5 },
         { name: 'Q4', value: 30 },
+        { name: 'Q5', value: 50 },
+        { name: 'Q6', value: 20 },
+        { name: 'Q7', value: 70 },
+        { name: 'Q8', value: 60 },
+        { name: 'Q9', value: 80 },
       ],
       // will be modified to reflect the code used to build the graph
       codeText: '',
@@ -38,9 +43,12 @@ class App extends Component {
           'chartWidth',
           'chartBGColor',
           'chartTitle',
-          'xTitle',
           'yTitle',
+          'xTitle',
           'transition',
+          'Y_Values',
+
+
         ],
         PieChart: ['chartWidth', 'chartHeight', 'chartTitle'],
       },
@@ -54,7 +62,9 @@ class App extends Component {
       yTitle: { value: 'Rainfall (cm)', type: 'text' },
       barColor: { value: '#7e8471', type: 'color' },
       barMargin: { value: 2, type: 'number' },
-      transition: { name: 'false', type: 'checkbox' },
+      transition: { value: 'false', type: 'checkbox' },
+      Y_Values: { value: "Array", type: 'text' },
+
     };
 
     // binding functions that are passed to children components
@@ -66,6 +76,15 @@ class App extends Component {
   handleChange(e) {
     let { name, type, value } = e.target;
 
+    if (name === 'barMargin') {
+      if (value < 0) { return }
+      else if (value > (this.state.chartWidth.value / this.state.data.length) - 1) { return }
+
+    }
+    if (name === 'transition') {
+      if (value === 'false') { value = 'true' }
+      else { value = 'false' }
+    }
     // parses the inputs of type number to be stored as numbers (string by default)
     if (type === 'number') {
       value = Number(value);
