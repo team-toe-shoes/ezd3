@@ -1,6 +1,6 @@
 import Chart from '../classes/Chart';
 import * as d3 from 'd3';
-import Chart from '../classes/Chart.js';
+// import Chart from '../classes/Chart.js';
 
 class BarChart extends Chart {
   plotGraph() {
@@ -130,7 +130,7 @@ class BarChart extends Chart {
 
   updateCode(nextProps) {
     this.props.updateCodeText(`
-      // Define basic graph properties 
+      // Define basic graph properties
       const xData = [20, 70, 5, 30];
       const yData = ['Q1', 'Q2', 'Q3', 'Q4'];
       const svgWidth = ${nextProps.chartWidth.value};
@@ -142,7 +142,7 @@ class BarChart extends Chart {
       const yTitle = ${nextProps.yTitle.value};
       const xTitle = ${nextProps.xTitle.value};
       const barWidth = ${nextProps.chartWidth.value / 4};
-      const margin = 40;  
+      const margin = 40;
 
       // Creates a linear scale for the y-axis. The domain represents the values
       // on the scale. The range, the height of the y-axis on the svg element.
@@ -150,16 +150,16 @@ class BarChart extends Chart {
         .scaleLinear()
         .domain([0, Math.max(...yData)])
         .range([svgHeight, 0]);
-  
-      // For the x-axis, we have a discrete distribution, so we 
+
+      // For the x-axis, we have a discrete distribution, so we
       // need to use the .scaleBand() method.
       const x = d3
         .scaleBand()
         .domain(xData)
         .rangeRound([0, svgWidth])
         .padding(0);
-  
-      // 'svg#plot_cont' is the CSS-selector for the element we 
+
+      // 'svg#plot_cont' is the CSS-selector for the element we
       // want to plot the graph in.
       const chart = d3.select('svg#plot_cont');
 
@@ -175,7 +175,7 @@ class BarChart extends Chart {
           .attr('transform', 'translate(' + margin + ',' + margin + ')')
 
         // select all <rect> inside of that <g> we just created.
-        // ps: there are none!  
+        // ps: there are none!
         .selectAll('rect')
         .data(dataset)
 
@@ -186,15 +186,15 @@ class BarChart extends Chart {
         .attr("height", function(d) { return svgHeight - y(d); })
         .attr("x", function(d, i) { return barWidth * i + parseInt(barPadding) / 2; })
         .attr("y", function(d) { return y(d); });
-      
-      // creates and style the x and y axis.  
+
+      // creates and style the x and y axis.
       const xAxis = d3.axisBottom(x);
       const yAxis = d3.axisLeft(y).ticks(5);
 
       chart.append("g")
         .attr("transform", "translate(" + margin + "," + (svgHeight + margin) + ")")
         .call(xAxis);
-      
+
       chart.append("g")
         .attr("transform", "translate(" + margin + "," + margin + ")")
         .call(yAxis);
@@ -210,7 +210,7 @@ class BarChart extends Chart {
         .style('font-weight', 'bold')
         .style('text-anchor', 'middle')
         .text(chartName);
-  
+
       // text label & styling for the x axis
       chart
         .append('text')
@@ -221,7 +221,7 @@ class BarChart extends Chart {
         .style('font-weight', 'bold')
         .style('text-anchor', 'middle')
         .text(xTitle);
-  
+
       // text label & styling for the y axis
       chart
         .append('text')

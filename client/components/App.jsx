@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DataForms from './DataForms.jsx';
 
 //import styled components
 import { MainWrapper, Title, GraphAndOptionsWrapper } from './../Styles/styledComponents';
@@ -16,10 +17,9 @@ class App extends Component {
     super();
     this.state = {
       data: [
-        { name: 'Q1', value: 20 },
-        { name: 'Q2', value: 70 },
-        { name: 'Q3', value: 5 },
-        { name: 'Q4', value: 30 },
+        { name: 'q1', value: 2 },
+        { name: 'q2', value: 3 },
+        { name: 'q3', value: 1 }
       ],
       // will be modified to reflect the code used to build the graph
       codeText: '',
@@ -60,6 +60,8 @@ class App extends Component {
     // binding functions that are passed to children components
     this.handleChange = this.handleChange.bind(this);
     this.updateCodeText = this.updateCodeText.bind(this);
+    this.handleDataInput = this.handleDataInput.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   // handle user interaction with inputs
@@ -83,6 +85,28 @@ class App extends Component {
     this.setState({ codeText });
   }
 
+  handleDataInput(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    })
+  }
+
+  handleOnClick() {
+    const newXY = {
+      name: this.state.xInput,
+      value: this.state.yInput
+    };
+    let curr_state = this.state.data;
+    if (curr_state.some(el => el.name === newXY.name)) alert('input key already exists');
+    else {
+      this.setState({
+        data: [...this.state.data, newXY]
+      })
+
+    }
+  }
+
   render() {
     const { graphs, type, codeText, data } = this.state;
 
@@ -92,6 +116,13 @@ class App extends Component {
       acc[option] = this.state[option];
       return acc;
     }, {});
+
+    // this.state.data.forEach(ele => {
+    //   console.log('test')
+    // })
+
+    console.log('test')
+
     return (
       <MainWrapper>
         {/* Navbar to be developed */}
@@ -108,7 +139,7 @@ class App extends Component {
             type={type}
           />
         </GraphAndOptionsWrapper>
-
+        <DataForms data={this.state.data} handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput}/>
         <CodeDisplay codeText={codeText} />
         <Footer />
       </MainWrapper>
