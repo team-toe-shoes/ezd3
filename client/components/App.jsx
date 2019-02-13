@@ -36,7 +36,10 @@ class App extends Component {
 
       // reflect the type of graph chosen by user
       // defaulted to Bar Chart
+
       type: 'LineChart',
+
+
 
       // options that can be modified by user for each type
       // of graphs available in the app
@@ -53,6 +56,7 @@ class App extends Component {
           'transition',
           'Y_Values'
         ],
+
         PieChart: ['chartWidth', 'chartHeight', 'chartTitle'],
         LineChart: [
           'barColor',
@@ -66,6 +70,25 @@ class App extends Component {
           'transition',
           'Y_Values'
         ]
+
+    
+        // RadarChart: [
+        //   'chartTitle',
+        //   'barColor',
+        //   'barMargin',
+        //   'chartBGColor',
+        //   'chartWidth',
+        //   'chartHeight',
+        //   'radial_top_margin',
+        //   'radial_left_margin',
+        //   'radial_bottom_margin',
+        //   'radial_right_margin',
+        //   'factor',
+        //   'factorLegend',
+        //   'levels',
+        //   'opacityArea'
+        // ]
+        PieChartHooks: ['chartWidth', 'chartHeight', 'innerRadius', 'outerRadius']
       },
 
       // all option options
@@ -77,15 +100,28 @@ class App extends Component {
       yTitle: { value: 'Rainfall (cm)', type: 'text' },
       barColor: { value: '#7e8471', type: 'color' },
       barMargin: { value: 2, type: 'number' },
+      radial_top_margin: { value: 20, type: 'number' },
+      radial_left_margin: { value: 10, type: 'number' },
+      radial_bottom_margin: { value: 20, type: 'number' },
+      radial_right_margin: { value: 10, type: 'number' },
       transition: { value: 'false', type: 'checkbox' },
-      Y_Values: { value: 'Array', type: 'text' }
+
+   
+      factor: { value: 1, type: 'number' },
+      factorLegend: { value: 0.85, type: 'number' },
+      levels: { value: 3, type: 'number' },
+      opacityArea: { value: 0.5, type: 'number' },
+      Y_Values: { value: "Array", type: 'text' },
+      innerRadius: { value: 120, type: 'number' },
+      outerRadius: { value: 150, type: 'number' }
+
     };
 
     // binding functions that are passed to children components
     this.handleChange = this.handleChange.bind(this);
     this.updateCodeText = this.updateCodeText.bind(this);
-    this.handleDataInput = this.handleDataInput.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.deleteColumn = this.deleteColumn.bind(this);
   }
 
   // handle user interaction with inputs
@@ -126,17 +162,11 @@ class App extends Component {
     this.setState({ codeText });
   }
 
-  handleDataInput(e) {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value
-    });
-  }
 
-  handleOnClick() {
+  handleOnClick(newCol) {
     const newXY = {
-      name: this.state.xInput,
-      value: this.state.yInput
+      name: newCol.xInput,
+      value: newCol.yInput
     };
     let curr_state = this.state.data;
     if (curr_state.some(el => el.name === newXY.name))
@@ -146,6 +176,17 @@ class App extends Component {
         data: [...this.state.data, newXY]
       });
     }
+  }
+
+  deleteColumn(e) {
+    let curData = this.state.data;
+    curData = curData.filter((ele) => {
+      return ele.name != e.target.name;
+    })
+
+    this.setState({
+      data: curData
+    })
   }
 
   render() {
@@ -158,11 +199,6 @@ class App extends Component {
       return acc;
     }, {});
 
-    // this.state.data.forEach(ele => {
-    //   console.log('test')
-    // })
-
-    console.log('test');
 
     return (
       <MainWrapper>
@@ -183,11 +219,8 @@ class App extends Component {
             type={type}
           />
         </GraphAndOptionsWrapper>
-        <DataForms
-          data={this.state.data}
-          handleOnClick={this.handleOnClick}
-          handleDataInput={this.handleDataInput}
-        />
+
+        <DataForms data={this.state.data} handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput} deleteColumn={this.deleteColumn} />
         <CodeDisplay codeText={codeText} />
         <Footer />
       </MainWrapper>

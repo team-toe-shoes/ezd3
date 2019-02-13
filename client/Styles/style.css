@@ -19,3 +19,18 @@ a, a:hover, a:active a:visited {
   text-decoration: none;
   color: black;
 }
+
+.h-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.h-flex > * {
+  padding: 0px 20px;
+}
+
+.close-btn {
+  color: red;
+}
