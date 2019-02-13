@@ -12,27 +12,6 @@ class LineChart extends Chart {
       xData.push(dataPair.name);
       yData.push(dataPair.value);
     }
-    for (let i = 0; i < xData.length; i += 1) {
-      let newData = {};
-    }
-
-    // let testObj = [{
-    //   x1: 1
-    //   y1: 20
-    //   x2: 2
-    //   y2: 70
-    // },
-    // {
-    //   x1: 2
-    //   y1: 70
-    //   x2: 3
-    //   y2: 5
-    // }, {
-    //   x1: 3
-    //   y1: 5
-    //   x2: 4
-    //   y2: 30
-    // }, ]
 
     console.log('I AM HERE', this.props.data);
 
@@ -47,7 +26,7 @@ class LineChart extends Chart {
     const barWidth = svgWidth / yData.length;
     const margin = 40;
     const transition = this.props.options.transition.value;
-
+    // const testX = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const y = d3
       .scaleLinear()
       .domain([0, Math.max(...yData)])
@@ -56,20 +35,12 @@ class LineChart extends Chart {
     // For the x-axis, we have a discrete distribution, so we
     // need to use the .scaleBand() method.
     const x = d3
-      .scaleLinear()
-      .domain([0, Math.max(...xData)])
-      .rangeRound([0, svgWidth]);
+      .scaleBand()
+      .domain(xData)
+      .rangeRound([0, svgWidth])
+      .padding(0);
 
     const chart = d3.select('svg#plot_cont');
-
-    // var valueline = d3
-    //   .line()
-    //   .x(function(d) {
-    //     return x(xData);
-    //   })
-    //   .y(function(d) {
-    //     return y(yData);
-    //   });
 
     chart
       .style('background-color', bgColor)
@@ -82,13 +53,16 @@ class LineChart extends Chart {
       .enter()
       .append('circle')
       .attr('class', 'circle')
-      .attr('cx', (d, i) => barWidth * i + parseInt(barPadding) / 2)
+      .attr(
+        'cx',
+        (d, i) => barWidth * i + parseInt(barPadding) / 2 + barWidth / 2
+      )
       .attr('cy', (d, i) => {
         console.log('INSIDE CIRCLE', barWidth, barPadding);
-        return d.value;
+        return svgHeight - (svgHeight * d.value) / Math.max(...yData);
       })
-      .attr('r', 10)
-      .attr('fill', 'pink');
+      .attr('r', 3)
+      .attr('fill', 'red');
 
     chart
       .attr('width', svgWidth + 2 * margin)
@@ -100,16 +74,28 @@ class LineChart extends Chart {
       .enter()
       .append('line')
       .attr('class', 'line')
-      .attr('x1', (d, i) => barWidth * (i - 1) + parseInt(barPadding) / 2)
-      .attr('y1', (d, i) => {
-        console.log('INSIDE LINE', barWidth, barPadding);
+      .attr('x1', (d, i) => {
         if (i > 0) {
-          return this.props.data[i - 1].value;
+          return barWidth * (i - 1) + parseInt(barPadding) / 2 + barWidth / 2;
         }
       })
-      .attr('x2', (d, i) => barWidth * i + parseInt(barPadding) / 2)
+      .attr('y1', (d, i) => {
+        // console.log('INSIDE LINE', barWidth, barPadding);
+        if (i === 0) {
+          return svgHeight;
+        }
+        return (
+          svgHeight -
+          (svgHeight * this.props.data[i - 1].value) / Math.max(...yData)
+        );
+      })
+
+      .attr(
+        'x2',
+        (d, i) => barWidth * i + parseInt(barPadding) / 2 + barWidth / 2
+      )
       .attr('y2', (d, i) => {
-        return d.value;
+        return svgHeight - (svgHeight * d.value) / Math.max(...yData);
       })
       .attr('stroke', 'steelblue')
       .attr('fill', 'solid');
@@ -126,6 +112,45 @@ class LineChart extends Chart {
       .append('g')
       .attr('transform', `translate(${margin},${margin})`)
       .call(yAxis);
+
+    // adding text label & stlying for Chart Name
+    chart
+      .append('text')
+      .attr(
+        'transform',
+        'translate(' +
+          (svgWidth / 2 + margin) +
+          ',' +
+          (Math.max(...yData) - margin) +
+          ')'
+      )
+      .style('font-size', '1.5em')
+      .style('font-weight', 'bold')
+      .style('text-anchor', 'middle')
+      .text(chartName);
+
+    // text label & styling for the x axis
+    chart
+      .append('text')
+      .attr('x', svgWidth / 2 + margin / 2)
+      .attr('y', svgHeight + margin + margin / 2)
+      .attr('dy', '1em')
+      .style('font-size', '1em')
+      .style('font-weight', 'bold')
+      .style('text-anchor', 'middle')
+      .text(xTitle);
+
+    // text label & styling for the y axis
+    chart
+      .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('x', -svgHeight / 2 - margin)
+      .attr('y', -5)
+      .attr('dy', '1em')
+      .style('font-size', '1em')
+      .style('font-weight', 'bold')
+      .style('text-anchor', 'middle')
+      .text(yTitle);
   }
 
   updateCode(nextProps) {
