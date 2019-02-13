@@ -9,10 +9,10 @@ class CodeDisplay extends Component {
   }
 
   render() {
-    return (      
+    return (
       <pre>
         <code className="language-javascript">
-          {this.props.codeText}      
+          {this.props.codeText}
         </code>
       </pre>
     );

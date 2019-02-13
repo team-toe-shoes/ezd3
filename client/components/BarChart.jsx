@@ -1,6 +1,5 @@
 import Chart from '../classes/Chart';
 import * as d3 from 'd3';
-// import Chart from '../classes/Chart.js';
 
 class BarChart extends Chart {
   plotGraph() {
@@ -81,7 +80,11 @@ class BarChart extends Chart {
       .append('text')
       .attr(
         'transform',
-        'translate(' + (svgWidth / 2 + margin) + ',' + (Math.max(...yData) - margin) + ')',
+        'translate(' +
+          (svgWidth / 2 + margin) +
+          ',' +
+          (Math.max(...yData) - margin) +
+          ')'
       )
       .style('font-size', '1.5em')
       .style('font-weight', 'bold')
@@ -111,13 +114,14 @@ class BarChart extends Chart {
       .style('text-anchor', 'middle')
       .text(yTitle);
 
-    if (transition === '') {
+    if (transition === 'true') {
       d3.selectAll('rect')
         .on('mouseover', function(d, i) {
           d3.select(this)
             .transition()
             .duration(200)
-            .style('opacity', 0.7);
+            .style('opacity', 0.7)
+            .style('fill', '#f93');
         })
         .on('mouseout', function(d, i) {
           d3.select(this)
@@ -132,7 +136,7 @@ class BarChart extends Chart {
     this.props.updateCodeText(`
       // Define basic graph properties
       const xData = [20, 70, 5, 30];
-      const yData = ['Q1', 'Q2', 'Q3', 'Q4'];
+      const yData = ${nextProps.Y_Values.value};
       const svgWidth = ${nextProps.chartWidth.value};
       const svgHeight = ${nextProps.chartHeight.value};
       const barPadding = ${nextProps.barMargin.value};
