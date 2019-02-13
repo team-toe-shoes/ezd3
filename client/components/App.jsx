@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DataForms from './DataForms.jsx';
+import TreeMap from './TreeMap.jsx';
 
 //import styled components
 import { MainWrapper, Title, GraphAndOptionsWrapper } from './../Styles/styledComponents';
@@ -24,7 +25,7 @@ class App extends Component {
 
       // reflect the type of graph chosen by user
       // defaulted to Bar Chart
-      type: 'BarChart',
+      type: 'PieChart',
 
       // options that can be modified by user for each type
       // of graphs available in the app
@@ -114,6 +115,7 @@ class App extends Component {
       acc[option] = this.state[option];
       return acc;
     }, {});
+    console.log(this.state.data);
     return (
       <MainWrapper>
         {/* Navbar to be developed */}
@@ -132,6 +134,7 @@ class App extends Component {
         </GraphAndOptionsWrapper>
         <DataForms handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput}/>
         <CodeDisplay codeText={codeText} />
+        <TreeMap />
         <Footer />
       </MainWrapper>
     );
