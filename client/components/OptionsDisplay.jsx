@@ -1,6 +1,6 @@
 import React from 'react';
 import OptionDisplay from './OptionDisplay.jsx';
-import { OptionsWrapper } from "./../Styles/styledComponents";
+import { OptionsWrapper } from './../Styles/styledComponents';
 
 const OptionsDisplay = props => {
   // iterate through the options passed in
@@ -15,11 +15,7 @@ const OptionsDisplay = props => {
     />
   ));
 
-  return (
-    <OptionsWrapper>
-      {options}
-    </OptionsWrapper>
-  )
+  return <OptionsWrapper>{options}</OptionsWrapper>;
 };
 
 export default OptionsDisplay;

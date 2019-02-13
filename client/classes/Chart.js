@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Chart extends Component {
   constructor() {
@@ -6,9 +6,11 @@ class Chart extends Component {
     this.debouncerTracker = 0;
   }
 
+  /* have to put "DidUpdate" in order to change the color
+  in the code and from the color chartsimultaneously */
   componentDidUpdate() {
     // everytime the component updates, we replot the graph.
-    document.querySelector('svg#plot_cont').innerHTML = '';
+    document.querySelector("svg#plot_cont").innerHTML = "";
     this.plotGraph();
   }
 
@@ -18,8 +20,7 @@ class Chart extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-
-     /*
+    /*
      * We need to manually decide wether or not the component should
      * re-render. Everytime a prop that relates to the graph changes,
      * we need to replot the graph. There are two problems:
