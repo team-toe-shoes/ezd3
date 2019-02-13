@@ -54,6 +54,21 @@ class PieChart extends Chart {
       .enter()
       .append('path')
       .attr('fill', d => color(d.data.name))
+      .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), this.props.data.length).reverse())
+
+    const svg = d3.select('svg#plot_cont')
+        .attr("width", width)
+        .attr("height", height)
+        .attr("text-anchor", "middle")
+        .style("font", "12px sans-serif");
+
+    const g = svg.append("g")
+      .attr("transform", `translate(${width / 2},${height / 2})`);
+
+      g.selectAll("path")
+      .data(arcs)
+      .enter().append("path")
+      .attr("fill", d => color(d.data.name))
       // .attr("fill", barColor)
       .attr('stroke', 'white')
       .attr('d', arc)
@@ -86,7 +101,8 @@ class PieChart extends Chart {
 
   updateCode(nextProps) {
     this.props.updateCodeText(`
-      const radius = ${nextProps.chartWidth.value};
+
+      const width = ${nextProps.chartWidth.value};
       const height = ${nextProps.chartHeight.value};
 
       const arc = d3.arc()
@@ -101,21 +117,21 @@ class PieChart extends Chart {
         const radius = Math.min(width, height) / 2 * 0.8;
         return d3.arc().innerRadius(radius).outerRadius(radius);
       };
-      
+
       const arcs = pie(this.props.data);
 
       const color = d3.scaleOrdinal()
         .domain(this.props.data.map(d => d.name))
         .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), this.props.data.length).reverse())
-        
-      const svg = 
+
+      const svg =
         d3.select('svg#plot_cont')
           .attr("width", width)
           .attr("height", height)
           .attr("text-anchor", "middle")
           .style("font", "12px sans-serif");
-      
-      const g = 
+
+      const g =
         svg.append("g")
         .attr("transform", translate(\${width / 2},\${height / 2}));
 

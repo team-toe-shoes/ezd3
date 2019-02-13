@@ -11,7 +11,9 @@ const OptionDisplay = props => {
     .replace("chartBGColor", "Background")
     .replace("chartTitle", "Chart Title")
     .replace("xTitle", "x-Title")
-    .replace("yTitle", "y-Title");
+    .replace("yTitle", "y-Title")
+    .replace("innerRadius", "Inner Radius")
+    .replace("outerRadius", "Outer Radius")
 
   return (
     <LabelWrapper>

@@ -70,6 +70,7 @@ class App extends Component {
         //   'levels',
         //   'opacityArea'
         // ]
+        PieChartHooks: ['chartWidth', 'chartHeight', 'innerRadius', 'outerRadius']
       },
 
       // all option options
@@ -86,18 +87,20 @@ class App extends Component {
       radial_bottom_margin: { value: 20, type: 'number' },
       radial_right_margin: { value: 10, type: 'number' },
       transition: { value: 'false', type: 'checkbox' },
-      Y_Values: { value: 'Array', type: 'text' },
       factor: { value: 1, type: 'number' },
       factorLegend: { value: 0.85, type: 'number' },
       levels: { value: 3, type: 'number' },
-      opacityArea: { value: 0.5, type: 'number' }
+      opacityArea: { value: 0.5, type: 'number' },
+      Y_Values: { value: "Array", type: 'text' },
+      innerRadius: { value: 120, type: 'number' },
+      outerRadius: { value: 150, type: 'number' }
     };
 
     // binding functions that are passed to children components
     this.handleChange = this.handleChange.bind(this);
     this.updateCodeText = this.updateCodeText.bind(this);
-    this.handleDataInput = this.handleDataInput.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.deleteColumn = this.deleteColumn.bind(this);
   }
 
   // handle user interaction with inputs
@@ -138,17 +141,10 @@ class App extends Component {
     this.setState({ codeText });
   }
 
-  handleDataInput(e) {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value
-    });
-  }
-
-  handleOnClick() {
+  handleOnClick(newCol) {
     const newXY = {
-      name: this.state.xInput,
-      value: this.state.yInput
+      name: newCol.xInput,
+      value: newCol.yInput
     };
     let curr_state = this.state.data;
     if (curr_state.some(el => el.name === newXY.name))
@@ -160,6 +156,17 @@ class App extends Component {
     }
   }
 
+  deleteColumn(e) {
+    let curData = this.state.data;
+    curData = curData.filter((ele) => {
+      return ele.name != e.target.name;
+    })
+
+    this.setState({
+      data: curData
+    })
+  }
+
   render() {
     const { graphs, type, codeText, data } = this.state;
 
@@ -169,12 +176,6 @@ class App extends Component {
       acc[option] = this.state[option];
       return acc;
     }, {});
-
-    // this.state.data.forEach(ele => {
-    //   console.log('test')
-    // })
-
-    console.log('test');
 
     return (
       <MainWrapper>
@@ -195,11 +196,8 @@ class App extends Component {
             type={type}
           />
         </GraphAndOptionsWrapper>
-        <DataForms
-          data={this.state.data}
-          handleOnClick={this.handleOnClick}
-          handleDataInput={this.handleDataInput}
-        />
+
+        <DataForms data={this.state.data} handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput} deleteColumn={this.deleteColumn} />
         <CodeDisplay codeText={codeText} />
         <Footer />
       </MainWrapper>
