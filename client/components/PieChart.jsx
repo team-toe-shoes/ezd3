@@ -49,21 +49,21 @@ class PieChart extends Chart {
       .append('g')
       .attr('transform', `translate(${width / 2},${height / 2})`);
 
-    g.selectAll('path')
-      .data(arcs)
-      .enter()
-      .append('path')
-      .attr('fill', d => color(d.data.name))
-      .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), this.props.data.length).reverse())
+    // g.selectAll('path')
+    //   .data(arcs)
+    //   .enter()
+    //   .append('path')
+    //   .attr('fill', d => color(d.data.name))
+    //   .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), this.props.data.length).reverse())
 
-    const svg = d3.select('svg#plot_cont')
-        .attr("width", width)
-        .attr("height", height)
-        .attr("text-anchor", "middle")
-        .style("font", "12px sans-serif");
+    // const svg = d3.select('svg#plot_cont')
+    //     .attr("width", width)
+    //     .attr("height", height)
+    //     .attr("text-anchor", "middle")
+    //     .style("font", "12px sans-serif");
 
-    const g = svg.append("g")
-      .attr("transform", `translate(${width / 2},${height / 2})`);
+    // const g = svg.append("g")
+    //   .attr("transform", `translate(${width / 2},${height / 2})`);
 
       g.selectAll("path")
       .data(arcs)

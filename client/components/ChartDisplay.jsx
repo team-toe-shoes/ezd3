@@ -14,12 +14,9 @@ const ChartDisplay = props => {
     BarChart: <BarChart {...props} />,
     PieChart: <PieChart {...props} />,
     LineChart: <LineChart {...props} />,
-    RadarChart: <RadarChart {...props} />
-  };
-  return <ChartWrapper>{children[props.type]}</ChartWrapper>;
+    // RadarChart: <RadarChart {...props} />,
     PieChartHooks: <PieChartHooks {...props} />
-
-  }
+  };
   return (
     <ChartWrapper>
       {children[props.type]}

@@ -39,7 +39,7 @@ class App extends Component {
       // defaulted to Bar Chart
 
       type: 'PieChart',
-      
+
       // options that can be modified by user for each type
       // of graphs available in the app
       graphs: {
@@ -68,25 +68,23 @@ class App extends Component {
           'xTitle',
           'transition',
           'Y_Values'
-        ]
-
-    
-        // RadarChart: [
-        //   'chartTitle',
-        //   'barColor',
-        //   'barMargin',
-        //   'chartBGColor',
-        //   'chartWidth',
-        //   'chartHeight',
-        //   'radial_top_margin',
-        //   'radial_left_margin',
-        //   'radial_bottom_margin',
-        //   'radial_right_margin',
-        //   'factor',
-        //   'factorLegend',
-        //   'levels',
-        //   'opacityArea'
-        // ]
+        ],
+        RadarChart: [
+          'chartTitle',
+          'barColor',
+          'barMargin',
+          'chartBGColor',
+          'chartWidth',
+          'chartHeight',
+          'radial_top_margin',
+          'radial_left_margin',
+          'radial_bottom_margin',
+          'radial_right_margin',
+          'factor',
+          'factorLegend',
+          'levels',
+          'opacityArea'
+        ],
         PieChartHooks: ['chartWidth', 'chartHeight', 'innerRadius', 'outerRadius']
       },
 
@@ -105,7 +103,7 @@ class App extends Component {
       radial_right_margin: { value: 10, type: 'number' },
       transition: { value: 'false', type: 'checkbox' },
 
-   
+
       factor: { value: 1, type: 'number' },
       factorLegend: { value: 0.85, type: 'number' },
       levels: { value: 3, type: 'number' },
