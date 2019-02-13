@@ -35,7 +35,9 @@ class Chart extends Component {
      * frequently, so we need to debounce it so it only gets called, at
      * max, once every 100ms.
      */
-    if (Date.now() - this.debouncerTracker < 50) return false;
+
+    if (Date.now() - this.debouncerTracker < 100) return false;
+
     this.debouncerTracker = Date.now();
 
     if (nextProps.codeText === this.props.codeText) {
@@ -46,7 +48,7 @@ class Chart extends Component {
   }
 
   render() {
-    return <svg id="plot_cont" />;
+    return <svg id='plot_cont' />;
   }
 }
 

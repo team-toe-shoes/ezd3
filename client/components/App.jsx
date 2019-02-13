@@ -55,7 +55,22 @@ class App extends Component {
           'transition',
           'Y_Values'
         ],
-        PieChart: ['chartWidth', 'chartHeight', 'chartTitle']
+
+        PieChart: ['chartWidth', 'chartHeight', 'chartTitle'],
+        LineChart: [
+          'barColor',
+          'barMargin',
+          'chartHeight',
+          'chartWidth',
+          'chartBGColor',
+          'chartTitle',
+          'yTitle',
+          'xTitle',
+          'transition',
+          'Y_Values'
+        ]
+
+    
         // RadarChart: [
         //   'chartTitle',
         //   'barColor',
@@ -89,6 +104,8 @@ class App extends Component {
       radial_bottom_margin: { value: 20, type: 'number' },
       radial_right_margin: { value: 10, type: 'number' },
       transition: { value: 'false', type: 'checkbox' },
+
+   
       factor: { value: 1, type: 'number' },
       factorLegend: { value: 0.85, type: 'number' },
       levels: { value: 3, type: 'number' },
@@ -96,6 +113,7 @@ class App extends Component {
       Y_Values: { value: "Array", type: 'text' },
       innerRadius: { value: 120, type: 'number' },
       outerRadius: { value: 150, type: 'number' }
+
     };
 
     // binding functions that are passed to children components
@@ -143,6 +161,7 @@ class App extends Component {
     this.setState({ codeText });
   }
 
+
   handleOnClick(newCol) {
     const newXY = {
       name: newCol.xInput,
@@ -178,6 +197,7 @@ class App extends Component {
       acc[option] = this.state[option];
       return acc;
     }, {});
+
     return (
       <MainWrapper>
         {/* Navbar to be developed */}
