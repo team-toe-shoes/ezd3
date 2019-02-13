@@ -40,6 +40,7 @@ class App extends Component {
 
       type: 'LineChart',
 
+
       // options that can be modified by user for each type
       // of graphs available in the app
       graphs: {
@@ -85,12 +86,9 @@ class App extends Component {
           'levels',
           'opacityArea'
         ],
-        PieChartHooks: [
-          'chartWidth',
-          'chartHeight',
-          'innerRadius',
-          'outerRadius'
-        ]
+
+        PieChartHooks: ['chartWidth', 'chartHeight', 'innerRadius', 'outerRadius'],
+        TreeMap: ['chartWidth', 'chartHeight']
       },
 
       // all option options
@@ -225,7 +223,6 @@ class App extends Component {
           deleteColumn={this.deleteColumn}
         />
         <CodeDisplay codeText={codeText} />
-        <TreeMap />
         <Footer />
       </MainWrapper>
     );
