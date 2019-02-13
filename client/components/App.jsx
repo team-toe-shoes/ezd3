@@ -120,6 +120,7 @@ class App extends Component {
     this.updateCodeText = this.updateCodeText.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.deleteColumn = this.deleteColumn.bind(this);
+    this.changeType = this.changeType.bind(this)
   }
 
   // handle user interaction with inputs
@@ -186,6 +187,12 @@ class App extends Component {
     });
   }
 
+  changeType(e) {
+    this.setState({
+      type: e.target.name
+    })
+  }
+
   render() {
     const { graphs, type, codeText, data } = this.state;
 
@@ -221,6 +228,8 @@ class App extends Component {
           handleOnClick={this.handleOnClick}
           handleDataInput={this.handleDataInput}
           deleteColumn={this.deleteColumn}
+          type={type}
+          changeType={this.changeType}
         />
         <CodeDisplay codeText={codeText} />
         <Footer />
