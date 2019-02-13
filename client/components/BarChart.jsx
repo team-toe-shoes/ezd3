@@ -67,13 +67,11 @@ class BarChart extends Chart {
     // creates the ticks.
     chart
       .append('g')
-      .attr('transform', `translate(${margin},${svgHeight + margin})`)
-      .call(xAxis);
+      .attr('transform', `translate(${margin},${svgHeight + margin})`);
+    // .call(xAxis);
 
-    chart
-      .append('g')
-      .attr('transform', `translate(${margin},${margin})`)
-      .call(yAxis);
+    chart.append('g').attr('transform', `translate(${margin},${margin})`);
+    // .call(yAxis);
 
     // adding text label & stlying for Chart Name
     chart

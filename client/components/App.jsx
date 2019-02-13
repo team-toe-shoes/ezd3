@@ -38,7 +38,7 @@ class App extends Component {
       // reflect the type of graph chosen by user
       // defaulted to Bar Chart
 
-      type: 'PieChart',
+      type: 'LineChart',
 
       // options that can be modified by user for each type
       // of graphs available in the app
@@ -85,13 +85,18 @@ class App extends Component {
           'levels',
           'opacityArea'
         ],
-        PieChartHooks: ['chartWidth', 'chartHeight', 'innerRadius', 'outerRadius']
+        PieChartHooks: [
+          'chartWidth',
+          'chartHeight',
+          'innerRadius',
+          'outerRadius'
+        ]
       },
 
       // all option options
       chartTitle: { value: 'Name', type: 'text' },
-      chartHeight: { value: 300, type: 'number' },
-      chartWidth: { value: 450, type: 'number' },
+      chartHeight: { value: 330, type: 'number' },
+      chartWidth: { value: 650, type: 'number' },
       chartBGColor: { value: '#fbfbfb', type: 'color' },
       xTitle: { value: 'Quartiles', type: 'text' },
       yTitle: { value: 'Rainfall (cm)', type: 'text' },
@@ -103,15 +108,13 @@ class App extends Component {
       radial_right_margin: { value: 10, type: 'number' },
       transition: { value: 'false', type: 'checkbox' },
 
-
       factor: { value: 1, type: 'number' },
       factorLegend: { value: 0.85, type: 'number' },
       levels: { value: 3, type: 'number' },
       opacityArea: { value: 0.5, type: 'number' },
-      Y_Values: { value: "Array", type: 'text' },
+      Y_Values: { value: 'Array', type: 'text' },
       innerRadius: { value: 120, type: 'number' },
       outerRadius: { value: 150, type: 'number' }
-
     };
 
     // binding functions that are passed to children components
@@ -159,7 +162,6 @@ class App extends Component {
     this.setState({ codeText });
   }
 
-
   handleOnClick(newCol) {
     const newXY = {
       name: newCol.xInput,
@@ -177,13 +179,13 @@ class App extends Component {
 
   deleteColumn(e) {
     let curData = this.state.data;
-    curData = curData.filter((ele) => {
+    curData = curData.filter(ele => {
       return ele.name != e.target.name;
-    })
+    });
 
     this.setState({
       data: curData
-    })
+    });
   }
 
   render() {
@@ -216,7 +218,12 @@ class App extends Component {
           />
         </GraphAndOptionsWrapper>
 
-        <DataForms data={this.state.data} handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput} deleteColumn={this.deleteColumn} />
+        <DataForms
+          data={this.state.data}
+          handleOnClick={this.handleOnClick}
+          handleDataInput={this.handleDataInput}
+          deleteColumn={this.deleteColumn}
+        />
         <CodeDisplay codeText={codeText} />
         <TreeMap />
         <Footer />
