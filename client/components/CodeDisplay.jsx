@@ -3,7 +3,7 @@ import Prism from "prismjs";
 import "../Styles/prism.css";
 
 class CodeDisplay extends Component {
-  componentDidMount() {
+  componentDidUpdate() {
     // We need to re-style the code everytime we change it
     Prism.highlightAll();
   }

@@ -80,8 +80,12 @@ class BarChart extends Chart {
       .append('text')
       .attr(
         'transform',
-        'translate(' + (svgWidth / 2 + margin) + ',' + (Math.max(...yData) - margin) + ')',
-    )
+        'translate(' +
+          (svgWidth / 2 + margin) +
+          ',' +
+          (Math.max(...yData) - margin) +
+          ')'
+      )
       .style('font-size', '1.5em')
       .style('font-weight', 'bold')
       .style('text-anchor', 'middle')
@@ -112,15 +116,14 @@ class BarChart extends Chart {
 
     if (transition === 'true') {
       d3.selectAll('rect')
-        .on('mouseover', function (d, i) {
+        .on('mouseover', function(d, i) {
           d3.select(this)
             .transition()
             .duration(200)
             .style('opacity', 0.7)
-            .style("fill", "#f93")
-
+            .style('fill', '#f93');
         })
-        .on('mouseout', function (d, i) {
+        .on('mouseout', function(d, i) {
           d3.select(this)
             .transition()
             .duration(200)
