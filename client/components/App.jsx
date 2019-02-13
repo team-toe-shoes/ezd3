@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import DataForms from './DataForms.jsx';
 
 //import styled components
-import { MainWrapper, Title, GraphAndOptionsWrapper } from './../Styles/styledComponents';
+import {
+  MainWrapper,
+  Title,
+  GraphAndOptionsWrapper
+} from './../Styles/styledComponents';
 
 //import components to render
 import OptionsDisplay from './OptionsDisplay.jsx';
@@ -25,15 +29,14 @@ class App extends Component {
         { name: 'Q6', value: 20 },
         { name: 'Q7', value: 70 },
         { name: 'Q8', value: 60 },
-        { name: 'Q9', value: 80 },
-
+        { name: 'Q9', value: 80 }
       ],
       // will be modified to reflect the code used to build the graph
       codeText: '',
 
       // reflect the type of graph chosen by user
       // defaulted to Bar Chart
-      type: 'BarChart',
+      type: 'RadarChart',
 
       // options that can be modified by user for each type
       // of graphs available in the app
@@ -48,11 +51,25 @@ class App extends Component {
           'yTitle',
           'xTitle',
           'transition',
-          'Y_Values',
-
-
+          'Y_Values'
         ],
-        PieChart: ['chartWidth', 'chartHeight', 'chartTitle'],
+        PieChart: ['chartWidth', 'chartHeight', 'chartTitle']
+        // RadarChart: [
+        //   'chartTitle',
+        //   'barColor',
+        //   'barMargin',
+        //   'chartBGColor',
+        //   'chartWidth',
+        //   'chartHeight',
+        //   'radial_top_margin',
+        //   'radial_left_margin',
+        //   'radial_bottom_margin',
+        //   'radial_right_margin',
+        //   'factor',
+        //   'factorLegend',
+        //   'levels',
+        //   'opacityArea'
+        // ]
         PieChartHooks: ['chartWidth', 'chartHeight', 'innerRadius', 'outerRadius']
       },
 
@@ -65,7 +82,15 @@ class App extends Component {
       yTitle: { value: 'Rainfall (cm)', type: 'text' },
       barColor: { value: '#7e8471', type: 'color' },
       barMargin: { value: 2, type: 'number' },
+      radial_top_margin: { value: 20, type: 'number' },
+      radial_left_margin: { value: 10, type: 'number' },
+      radial_bottom_margin: { value: 20, type: 'number' },
+      radial_right_margin: { value: 10, type: 'number' },
       transition: { value: 'false', type: 'checkbox' },
+      factor: { value: 1, type: 'number' },
+      factorLegend: { value: 0.85, type: 'number' },
+      levels: { value: 3, type: 'number' },
+      opacityArea: { value: 0.5, type: 'number' },
       Y_Values: { value: "Array", type: 'text' },
       innerRadius: { value: 120, type: 'number' },
       outerRadius: { value: 150, type: 'number' }
@@ -83,13 +108,21 @@ class App extends Component {
     let { name, type, value } = e.target;
 
     if (name === 'barMargin') {
-      if (value < 0) { return }
-      else if (value > (this.state.chartWidth.value / this.state.data.length) - 1) { return }
-
+      if (value < 0) {
+        return;
+      } else if (
+        value >
+        this.state.chartWidth.value / this.state.data.length - 1
+      ) {
+        return;
+      }
     }
     if (name === 'transition') {
-      if (value === 'false') { value = 'true' }
-      else { value = 'false' }
+      if (value === 'false') {
+        value = 'true';
+      } else {
+        value = 'false';
+      }
     }
     // parses the inputs of type number to be stored as numbers (string by default)
     if (type === 'number') {
@@ -100,7 +133,7 @@ class App extends Component {
 
     // update the state for corresponding options
     this.setState({
-      [name]: newObj,
+      [name]: newObj
     });
   }
 
@@ -114,12 +147,12 @@ class App extends Component {
       value: newCol.yInput
     };
     let curr_state = this.state.data;
-    if (curr_state.some(el => el.name === newXY.name)) alert('input key already exists');
+    if (curr_state.some(el => el.name === newXY.name))
+      alert('input key already exists');
     else {
       this.setState({
         data: [...this.state.data, newXY]
-      })
-
+      });
     }
   }
 
@@ -144,8 +177,6 @@ class App extends Component {
       return acc;
     }, {});
 
-    console.log('test')
-
     return (
       <MainWrapper>
         {/* Navbar to be developed */}
@@ -153,7 +184,10 @@ class App extends Component {
         <Title>D3 Simplifier</Title>
         <GraphAndOptionsWrapper>
           {/* Container that has each option as a child components */}
-          <OptionsDisplay options={optionsToPass} handleChange={this.handleChange} />
+          <OptionsDisplay
+            options={optionsToPass}
+            handleChange={this.handleChange}
+          />
           <ChartDisplay
             options={optionsToPass}
             data={data}
@@ -162,6 +196,7 @@ class App extends Component {
             type={type}
           />
         </GraphAndOptionsWrapper>
+
         <DataForms data={this.state.data} handleOnClick={this.handleOnClick} handleDataInput={this.handleDataInput} deleteColumn={this.deleteColumn} />
         <CodeDisplay codeText={codeText} />
         <Footer />
