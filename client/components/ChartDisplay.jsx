@@ -6,6 +6,7 @@ import { ChartWrapper } from "./../Styles/styledComponents";
 import LineChart from "./LineChart.jsx";
 import RadarChart from './RadarChart.jsx';
 import PieChartHooks from './PieChartHooks.jsx';
+import TreeMap from './TreeMap.jsx'
 
 const ChartDisplay = props => {
   // allows to change the graph being displayed
@@ -15,7 +16,8 @@ const ChartDisplay = props => {
     PieChart: <PieChart {...props} />,
     LineChart: <LineChart {...props} />,
     // RadarChart: <RadarChart {...props} />,
-    PieChartHooks: <PieChartHooks {...props} />
+    PieChartHooks: <PieChartHooks {...props} />,
+    TreeMap: <TreeMap {...props} />
   };
   return (
     <ChartWrapper>
